@@ -3,13 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 const links = [
-  {
-    label: 'Email',
-    value: 'taimeeh12@gmail.com',
-    href: 'mailto:taimeeh12@gmail.com',
-    icon: '✉',
-    mono: 'mailto:',
-  },
+
   {
     label: 'LinkedIn',
     value: 'linkedin.com/in/altaimee',
@@ -24,13 +18,7 @@ const links = [
     icon: 'gh',
     mono: 'https://',
   },
-  {
-    label: 'Phone',
-    value: '313-327-9329',
-    href: 'tel:3133279329',
-    icon: '☎',
-    mono: 'tel:',
-  },
+
 ]
 
 export default function Contact() {
