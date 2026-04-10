@@ -38,53 +38,50 @@ export default function Hero() {
   }, [displayed, deleting, titleIndex])
 
   return (
-    <section id="hero" className="relative min-h-screen grid-bg flex items-center justify-center overflow-hidden">
-      {/* Radial glow backdrop */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[600px] h-[600px] rounded-full bg-navy-600/10 blur-[120px]" />
-      </div>
-      <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] rounded-full bg-accent-blue/5 blur-[80px] pointer-events-none" />
+    <section id="hero" className="relative min-h-screen flex items-center justify-center paper-bg overflow-hidden">
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        {/* Tag line */}
+      {/* Subtle warm gradient top-right */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-sage-100/40 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-brown-100/60 blur-[100px] pointer-events-none" />
+
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+
+        {/* Status pill */}
         <div
-          className={`inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-navy-600/60 bg-navy-800/40 transition-all duration-700 ${
+          className={`inline-flex items-center gap-2 mb-10 px-4 py-2 rounded-full border border-sage-200 bg-white/70 backdrop-blur-sm transition-all duration-700 ${
             visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
-          <span className="w-2 h-2 rounded-full bg-accent-cyan animate-pulse" />
-          <span className="font-mono text-xs text-slate-400 tracking-widest uppercase">
+          <span className="w-2 h-2 rounded-full bg-sage-500 animate-pulse" />
+          <span className="text-xs text-sage-600 tracking-widest uppercase font-medium">
             Available for opportunities
           </span>
         </div>
 
         {/* Name */}
         <h1
-          className={`font-sans font-extrabold text-6xl sm:text-7xl md:text-8xl tracking-tight mb-4 transition-all duration-700 delay-150 ${
+          className={`font-serif font-bold text-6xl sm:text-7xl md:text-8xl tracking-tight mb-4 leading-tight transition-all duration-700 delay-150 ${
             visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
-          <span className="text-white">Al-Taimee</span>
+          <span className="text-brown-900">Al-Taimee</span>
           <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-blue to-accent-cyan glow-text">
-            Hassan
-          </span>
+          <span className="text-sage-500">Hassan</span>
         </h1>
 
         {/* Typewriter title */}
         <div
-          className={`font-mono text-xl sm:text-2xl text-slate-300 mb-8 h-8 transition-all duration-700 delay-300 ${
+          className={`text-lg sm:text-xl text-brown-500 mb-8 h-8 font-mono transition-all duration-700 delay-300 ${
             visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
-          <span className="text-navy-300">{'>'}</span>{' '}
           <span>{displayed}</span>
-          <span className="animate-blink text-accent-blue">|</span>
+          <span className="animate-blink text-sage-400">|</span>
         </div>
 
         {/* Summary */}
         <p
-          className={`max-w-2xl mx-auto text-slate-400 text-lg leading-relaxed mb-12 transition-all duration-700 delay-500 ${
+          className={`max-w-xl mx-auto text-brown-500 text-base leading-relaxed mb-12 transition-all duration-700 delay-500 ${
             visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
@@ -100,13 +97,13 @@ export default function Hero() {
         >
           <a
             href="#experience"
-            className="px-8 py-3 bg-accent-blue text-navy-950 font-mono font-semibold text-sm rounded tracking-wider hover:bg-accent-cyan transition-colors duration-200"
+            className="px-7 py-3 bg-sage-500 text-white font-medium text-sm rounded-lg hover:bg-sage-600 transition-colors duration-200 shadow-sm"
           >
             View My Work
           </a>
           <a
             href="#contact"
-            className="px-8 py-3 border border-navy-500 text-slate-300 font-mono text-sm rounded tracking-wider hover:border-accent-blue hover:text-accent-blue transition-all duration-200"
+            className="px-7 py-3 border border-brown-300 text-brown-700 font-medium text-sm rounded-lg hover:border-sage-400 hover:text-sage-600 hover:bg-sage-50 transition-all duration-200"
           >
             Get In Touch
           </a>
@@ -115,8 +112,8 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-        <span className="font-mono text-xs text-slate-500 tracking-widest">SCROLL</span>
-        <div className="w-px h-12 bg-gradient-to-b from-slate-500 to-transparent" />
+        <span className="text-xs text-brown-400 tracking-widest uppercase font-medium">Scroll</span>
+        <div className="w-px h-10 bg-gradient-to-b from-brown-400 to-transparent" />
       </div>
     </section>
   )

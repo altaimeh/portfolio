@@ -5,27 +5,22 @@ import { useEffect, useRef, useState } from 'react'
 const skillGroups = [
   {
     category: 'Languages',
-    icon: '{ }',
     skills: ['TypeScript', 'Java', 'JavaScript (ES6+)', 'SQL'],
   },
   {
     category: 'Frontend',
-    icon: '</>',
     skills: ['React.js', 'Next.js', 'HTML5 / CSS3', 'Tailwind CSS', 'Webpack', 'Jest'],
   },
   {
     category: 'Backend',
-    icon: '///',
     skills: ['Spring Boot', 'REST APIs', 'Microservices', 'SNS/SQS', 'Node.js', 'Ruby on Rails'],
   },
   {
     category: 'Cloud & DevOps',
-    icon: '☁',
     skills: ['AWS Cloud Services', 'Docker', 'Terraform', 'CI/CD Pipelines', 'GitLab', 'Serverless'],
   },
   {
     category: 'Tools & Methods',
-    icon: '⚙',
     skills: ['Agile / Scrum', 'Jira', 'Postman', 'Power BI', 'LangChain', 'LLMs'],
   },
 ]
@@ -49,39 +44,38 @@ export default function Skills() {
   }, [])
 
   return (
-    <section id="skills" ref={ref} className="py-32 relative">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="skills" ref={ref} className="py-28 relative bg-white">
+      <div className="absolute top-0 left-0 right-0 h-px bg-brown-100" />
+
+      <div className="max-w-5xl mx-auto px-6">
 
         {/* Section label */}
-        <div className={`mb-16 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="font-mono text-accent-blue text-sm tracking-widest">02. SKILLS</span>
-          <h2 className="font-sans font-bold text-4xl sm:text-5xl text-white mt-2">
+        <div className={`mb-14 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <p className="text-xs text-sage-500 font-medium tracking-widest uppercase mb-2">02 — Skills</p>
+          <h2 className="font-serif font-bold text-4xl sm:text-5xl text-brown-900">
             Technical Arsenal
           </h2>
-          <div className="mt-4 w-16 h-px bg-gradient-to-r from-accent-blue to-transparent" />
+          <div className="section-divider mt-4" />
         </div>
 
         {/* Skill groups grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
           {skillGroups.map((group, i) => (
             <div
               key={group.category}
-              className={`glow-border bg-navy-900/60 border border-navy-700/50 rounded-lg p-6 transition-all duration-700 hover:border-navy-500/70 ${
+              className={`bg-brown-50 border border-brown-100 rounded-xl p-6 card-shadow transition-all duration-700 hover:border-sage-200 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{ transitionDelay: `${i * 80}ms` }}
             >
-              <div className="flex items-center gap-3 mb-4">
-                <span className="font-mono text-accent-blue text-base">{group.icon}</span>
-                <span className="font-sans font-semibold text-white text-sm tracking-wide">
-                  {group.category}
-                </span>
-              </div>
+              <h3 className="font-semibold text-brown-800 text-sm mb-4 tracking-wide">
+                {group.category}
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {group.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="font-mono text-xs px-2.5 py-1 rounded bg-navy-700/60 text-slate-300 border border-navy-600/40 hover:border-accent-blue/40 hover:text-accent-blue transition-colors duration-200"
+                    className="text-xs px-2.5 py-1 rounded-md bg-white text-brown-600 border border-brown-200 hover:border-sage-300 hover:text-sage-700 transition-colors duration-200"
                   >
                     {skill}
                   </span>
@@ -95,15 +89,15 @@ export default function Skills() {
         <div
           className={`transition-all duration-700 delay-500 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
         >
-          <p className="font-mono text-xs text-slate-500 tracking-widest uppercase mb-4">Certifications</p>
-          <div className="flex flex-wrap gap-4">
+          <p className="text-xs text-brown-400 tracking-widest uppercase mb-4 font-medium">Certifications</p>
+          <div className="flex flex-wrap gap-3">
             {certs.map((cert) => (
               <div
                 key={cert.name}
-                className="flex items-center gap-3 px-5 py-3 rounded-lg border border-accent-blue/25 bg-navy-800/40 hover:border-accent-blue/50 transition-colors duration-200"
+                className="flex items-center gap-3 px-5 py-3 rounded-xl border border-sage-200 bg-sage-50 hover:bg-sage-100 transition-colors duration-200"
               >
-                <span className="font-mono text-accent-blue text-xs font-semibold">{cert.abbr}</span>
-                <span className="text-slate-300 text-sm">{cert.name}</span>
+                <span className="font-mono text-sage-600 text-xs font-semibold">{cert.abbr}</span>
+                <span className="text-brown-700 text-sm">{cert.name}</span>
               </div>
             ))}
           </div>

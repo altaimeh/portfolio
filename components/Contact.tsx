@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react'
 
 const links = [
-
   {
     label: 'LinkedIn',
     value: 'linkedin.com/in/altaimee',
@@ -18,7 +17,6 @@ const links = [
     icon: 'gh',
     mono: 'https://',
   },
-
 ]
 
 export default function Contact() {
@@ -35,33 +33,28 @@ export default function Contact() {
   }, [])
 
   return (
-    <section id="contact" ref={ref} className="py-32 relative">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-navy-600/40 to-transparent" />
+    <section id="contact" ref={ref} className="py-28 relative bg-white">
+      <div className="absolute top-0 left-0 right-0 h-px bg-brown-100" />
 
-      {/* Bottom glow */}
-      <div className="absolute inset-0 flex items-end justify-center pointer-events-none pb-0">
-        <div className="w-[500px] h-[200px] bg-accent-blue/5 blur-[80px]" />
-      </div>
-
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div className={`mb-16 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="font-mono text-accent-blue text-sm tracking-widest">04. CONTACT</span>
-          <h2 className="font-sans font-bold text-4xl sm:text-5xl text-white mt-2">
+      <div className="max-w-5xl mx-auto px-6 relative z-10">
+        <div className={`mb-14 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <p className="text-xs text-sage-500 font-medium tracking-widest uppercase mb-2">05 — Contact</p>
+          <h2 className="font-serif font-bold text-4xl sm:text-5xl text-brown-900">
             Let&apos;s Connect
           </h2>
-          <div className="mt-4 w-16 h-px bg-gradient-to-r from-accent-blue to-transparent" />
+          <div className="section-divider mt-4" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* CTA text */}
           <div className={`transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <p className="text-slate-300 text-lg leading-relaxed mb-6">
+            <p className="text-brown-600 text-base leading-relaxed mb-6">
               I&apos;m currently open to new full-stack and software engineering roles. Whether you have a question, an opportunity, or just want to say hi — my inbox is always open.
             </p>
-            <p className="font-mono text-sm text-slate-500">
-              <span className="text-accent-blue">const</span> status ={' '}
-              <span className="text-emerald-400">&quot;open_to_work&quot;</span>;
-            </p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sage-50 border border-sage-200">
+              <span className="w-2 h-2 rounded-full bg-sage-500 animate-pulse" />
+              <span className="text-xs text-sage-700 font-medium">Open to work</span>
+            </div>
           </div>
 
           {/* Links */}
@@ -72,31 +65,30 @@ export default function Contact() {
                 href={link.href}
                 target={link.href.startsWith('http') ? '_blank' : undefined}
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 bg-navy-900/50 border border-navy-700/50 rounded-lg glow-border group transition-all duration-200 hover:bg-navy-800/60"
+                className="flex items-center gap-4 p-4 bg-brown-50 border border-brown-100 rounded-xl card-shadow group transition-all duration-200 hover:border-sage-200 hover:bg-white"
                 style={{ transitionDelay: `${i * 60}ms` }}
               >
-                <span className="w-8 h-8 flex items-center justify-center rounded bg-navy-700/60 font-mono text-xs text-accent-blue border border-navy-600/40 flex-shrink-0">
+                <span className="w-9 h-9 flex items-center justify-center rounded-lg bg-white font-mono text-xs text-sage-600 border border-brown-200 flex-shrink-0 font-semibold">
                   {link.icon}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="font-mono text-xs text-slate-500 tracking-widest uppercase">{link.label}</p>
-                  <p className="text-slate-200 text-sm truncate group-hover:text-accent-blue transition-colors duration-200">
-                    <span className="text-navy-400 mr-1">{link.mono}</span>
+                  <p className="text-xs text-brown-400 tracking-widest uppercase font-medium mb-0.5">{link.label}</p>
+                  <p className="text-brown-700 text-sm truncate group-hover:text-sage-600 transition-colors duration-200">
                     {link.value.replace('mailto:', '').replace('https://', '').replace('tel:', '')}
                   </p>
                 </div>
-                <span className="text-slate-600 group-hover:text-accent-blue transition-colors duration-200 text-sm">↗</span>
+                <span className="text-brown-300 group-hover:text-sage-500 transition-colors duration-200">↗</span>
               </a>
             ))}
           </div>
         </div>
 
         {/* Footer */}
-        <div className={`mt-24 pt-8 border-t border-navy-800/60 flex flex-wrap items-center justify-between gap-4 transition-all duration-700 delay-500 ${visible ? 'opacity-100' : 'opacity-0'}`}>
-          <span className="font-mono text-xs text-slate-600">
-            <span className="text-accent-blue">{'>'}</span> Al-Taimee Hassan © {new Date().getFullYear()}
+        <div className={`mt-24 pt-8 border-t border-brown-100 flex flex-wrap items-center justify-between gap-4 transition-all duration-700 delay-500 ${visible ? 'opacity-100' : 'opacity-0'}`}>
+          <span className="text-xs text-brown-400 font-medium">
+            Al-Taimee Hassan © {new Date().getFullYear()}
           </span>
-          <span className="font-mono text-xs text-slate-600">
+          <span className="text-xs text-brown-300">
             Built with Next.js · TypeScript · Tailwind CSS
           </span>
         </div>

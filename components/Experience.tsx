@@ -46,6 +46,12 @@ const experiences = [
   },
 ]
 
+const typeStyles: Record<string, string> = {
+  'Full-time': 'border-sage-300 text-sage-700 bg-sage-50',
+  'Contract': 'border-brown-300 text-brown-600 bg-brown-50',
+  'Internship': 'border-brown-200 text-brown-500 bg-brown-50',
+}
+
 export default function Experience() {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
@@ -63,18 +69,17 @@ export default function Experience() {
   const exp = experiences[active]
 
   return (
-    <section id="experience" ref={ref} className="py-32 relative">
-      {/* Subtle divider line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-navy-600/40 to-transparent" />
+    <section id="experience" ref={ref} className="py-28 relative paper-bg">
+      <div className="absolute top-0 left-0 right-0 h-px bg-brown-100" />
 
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6">
 
-        <div className={`mb-16 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="font-mono text-accent-blue text-sm tracking-widest">03. EXPERIENCE</span>
-          <h2 className="font-sans font-bold text-4xl sm:text-5xl text-white mt-2">
+        <div className={`mb-14 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <p className="text-xs text-sage-500 font-medium tracking-widest uppercase mb-2">03 — Experience</p>
+          <h2 className="font-serif font-bold text-4xl sm:text-5xl text-brown-900">
             Where I&apos;ve Worked
           </h2>
-          <div className="mt-4 w-16 h-px bg-gradient-to-r from-accent-blue to-transparent" />
+          <div className="section-divider mt-4" />
         </div>
 
         <div className={`grid grid-cols-1 lg:grid-cols-3 gap-8 transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
@@ -85,10 +90,10 @@ export default function Experience() {
               <button
                 key={e.company}
                 onClick={() => setActive(i)}
-                className={`flex-shrink-0 text-left px-4 py-3 rounded font-mono text-sm tracking-wide transition-all duration-200 border-l-2 ${
+                className={`flex-shrink-0 text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 border-l-2 ${
                   active === i
-                    ? 'border-accent-blue bg-navy-800/60 text-accent-blue'
-                    : 'border-navy-700 text-slate-400 hover:text-slate-200 hover:bg-navy-800/30 hover:border-navy-500'
+                    ? 'border-sage-500 bg-white text-sage-700 shadow-sm'
+                    : 'border-transparent text-brown-500 hover:text-brown-800 hover:bg-white/60 hover:border-brown-200'
                 }`}
               >
                 {e.company}
@@ -97,21 +102,15 @@ export default function Experience() {
           </div>
 
           {/* Experience detail */}
-          <div className="lg:col-span-2 bg-navy-900/50 border border-navy-700/50 rounded-lg p-8 glow-border">
+          <div className="lg:col-span-2 bg-white border border-brown-100 rounded-2xl p-8 card-shadow">
             <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
               <div>
-                <h3 className="font-sans font-bold text-xl text-white">{exp.role}</h3>
-                <p className="text-accent-blue font-mono text-sm mt-1">{exp.company} — {exp.location}</p>
+                <h3 className="font-serif font-bold text-xl text-brown-900">{exp.role}</h3>
+                <p className="text-sage-600 text-sm mt-1 font-medium">{exp.company} — {exp.location}</p>
               </div>
               <div className="text-right">
-                <span className="font-mono text-xs text-slate-400 block">{exp.period}</span>
-                <span className={`inline-block mt-1 font-mono text-xs px-2 py-0.5 rounded-full border ${
-                  exp.type === 'Full-time'
-                    ? 'border-accent-cyan/30 text-accent-cyan bg-accent-cyan/5'
-                    : exp.type === 'Contract'
-                    ? 'border-purple-400/30 text-purple-300 bg-purple-400/5'
-                    : 'border-emerald-400/30 text-emerald-300 bg-emerald-400/5'
-                }`}>
+                <span className="text-xs text-brown-400 block">{exp.period}</span>
+                <span className={`inline-block mt-1.5 text-xs px-2.5 py-0.5 rounded-full border font-medium ${typeStyles[exp.type]}`}>
                   {exp.type}
                 </span>
               </div>
@@ -119,16 +118,16 @@ export default function Experience() {
 
             <ul className="space-y-3 mb-6">
               {exp.highlights.map((h, i) => (
-                <li key={i} className="flex items-start gap-3 text-slate-300 text-sm leading-relaxed">
-                  <span className="text-accent-blue mt-0.5 flex-shrink-0">▸</span>
+                <li key={i} className="flex items-start gap-3 text-brown-600 text-sm leading-relaxed">
+                  <span className="text-sage-400 mt-1 flex-shrink-0">▸</span>
                   {h}
                 </li>
               ))}
             </ul>
 
-            <div className="flex flex-wrap gap-2 pt-4 border-t border-navy-700/40">
+            <div className="flex flex-wrap gap-2 pt-5 border-t border-brown-100">
               {exp.stack.map((tech) => (
-                <span key={tech} className="font-mono text-xs px-2.5 py-1 rounded bg-navy-700/50 text-slate-400 border border-navy-600/30">
+                <span key={tech} className="text-xs px-2.5 py-1 rounded-md bg-brown-50 text-brown-500 border border-brown-200">
                   {tech}
                 </span>
               ))}
@@ -137,18 +136,18 @@ export default function Experience() {
         </div>
 
         {/* Education */}
-        <div className={`mt-12 p-6 bg-navy-900/40 border border-navy-700/40 rounded-lg transition-all duration-700 delay-400 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <p className="font-mono text-xs text-slate-500 tracking-widest uppercase mb-3">Education</p>
+        <div className={`mt-10 p-6 bg-white border border-brown-100 rounded-2xl card-shadow transition-all duration-700 delay-400 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <p className="text-xs text-brown-400 tracking-widest uppercase mb-3 font-medium">Education</p>
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="font-sans font-semibold text-white">Bachelor of Science in Computer Science</p>
-              <p className="text-accent-blue font-mono text-sm mt-1">Wayne State University — Detroit, MI</p>
+              <p className="font-serif font-semibold text-brown-900 text-lg">Bachelor of Science in Computer Science</p>
+              <p className="text-sage-600 text-sm mt-1 font-medium">Wayne State University — Detroit, MI</p>
             </div>
-            <div className="flex flex-wrap gap-3 text-xs font-mono text-slate-400">
+            <div className="flex flex-wrap gap-3 text-xs text-brown-400 font-medium">
               <span>Hackathon Team Lead</span>
-              <span className="text-navy-500">|</span>
+              <span className="text-brown-200">|</span>
               <span>Capstone Team Lead</span>
-              <span className="text-navy-500">|</span>
+              <span className="text-brown-200">|</span>
               <span>BSA President</span>
             </div>
           </div>

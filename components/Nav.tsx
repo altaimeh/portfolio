@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react'
 
 const navLinks = [
-  { label: 'about', href: '#hero' },
-  { label: 'skills', href: '#skills' },
-  { label: 'experience', href: '#experience' },
-  { label: 'contact', href: '#contact' },
+  { label: 'About', href: '#hero' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Contact', href: '#contact' },
 ]
 
 export default function Nav() {
@@ -32,22 +33,22 @@ export default function Nav() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       scrolled
-        ? 'bg-navy-950/90 backdrop-blur-md border-b border-navy-700/40'
+        ? 'bg-brown-50/95 backdrop-blur-sm border-b border-brown-200/60 shadow-sm'
         : 'bg-transparent'
     }`}>
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <span className="font-mono text-accent-blue text-sm tracking-widest">
-          <span className="text-navy-400">{'>'}</span> alt.dev
+      <div className="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+        <span className="font-serif text-lg font-semibold text-brown-800 tracking-wide">
+          Al-Taimee Hassan
         </span>
         <div className="flex items-center gap-8">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className={`font-mono text-xs tracking-widest uppercase transition-colors duration-200 hover-underline ${
+              className={`text-sm font-medium tracking-wide transition-colors duration-200 hover-underline ${
                 active === link.href.slice(1)
-                  ? 'text-accent-blue'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'text-sage-600'
+                  : 'text-brown-500 hover:text-brown-800'
               }`}
             >
               {link.label}
