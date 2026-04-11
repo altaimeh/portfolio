@@ -7,7 +7,7 @@ const experiences = [
     role: 'Full Stack Software Engineer',
     company: 'Ally Financial',
     location: 'Detroit, MI',
-    period: 'Feb 2024 – Jan 2026',
+    period: '2024 — 2026',
     type: 'Full-time',
     highlights: [
       'Migrated 20+ legacy JSP/Struts interfaces to React, reducing technical debt significantly.',
@@ -22,7 +22,7 @@ const experiences = [
     role: 'IT Specialist',
     company: 'Detroit Lions',
     location: 'Detroit, MI',
-    period: 'Oct 2024 – Jan 2025',
+    period: '2024',
     type: 'Contract',
     highlights: [
       'Served as technical point of contact for ticket authentication systems during live events.',
@@ -33,9 +33,9 @@ const experiences = [
   },
   {
     role: 'IT Analyst',
-    company: 'Blue Cross Blue Shield of Michigan',
+    company: 'Blue Cross Blue Shield',
     location: 'Detroit, MI',
-    period: 'May 2024 – Aug 2024',
+    period: '2024',
     type: 'Internship',
     highlights: [
       'Built and deployed enterprise SharePoint solutions to enhance internal IT operations.',
@@ -46,112 +46,107 @@ const experiences = [
   },
 ]
 
-const typeStyles: Record<string, string> = {
-  'Full-time': 'border-sage-300 text-sage-700 bg-sage-50',
-  'Contract': 'border-brown-300 text-brown-600 bg-brown-50',
-  'Internship': 'border-brown-200 text-brown-500 bg-brown-50',
-}
-
 export default function Experience() {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
-  const [active, setActive] = useState(0)
+  const [open, setOpen]       = useState<number | null>(0)
 
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
-      { threshold: 0.1 }
+      ([e]) => { if (e.isIntersecting) setVisible(true) },
+      { threshold: 0.05 }
     )
     if (ref.current) obs.observe(ref.current)
     return () => obs.disconnect()
   }, [])
 
-  const exp = experiences[active]
-
   return (
-    <section id="experience" ref={ref} className="py-28 relative paper-bg">
-      <div className="absolute top-0 left-0 right-0 h-px bg-brown-100" />
+    <section id="experience" ref={ref} className="bg-[#0D1A35] px-8 sm:px-12 py-28">
+      <div className="max-w-7xl mx-auto">
 
-      <div className="max-w-5xl mx-auto px-6">
-
-        <div className={`mb-14 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <p className="text-xs text-sage-500 font-medium tracking-widest uppercase mb-2">03 — Experience</p>
-          <h2 className="font-serif font-bold text-4xl sm:text-5xl text-brown-900">
-            Where I&apos;ve Worked
-          </h2>
-          <div className="section-divider mt-4" />
-        </div>
-
-        <div className={`grid grid-cols-1 lg:grid-cols-3 gap-8 transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-
-          {/* Company selector */}
-          <div className="lg:col-span-1 flex flex-row lg:flex-col gap-1 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
-            {experiences.map((e, i) => (
-              <button
-                key={e.company}
-                onClick={() => setActive(i)}
-                className={`flex-shrink-0 text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 border-l-2 ${
-                  active === i
-                    ? 'border-sage-500 bg-white text-sage-700 shadow-sm'
-                    : 'border-transparent text-brown-500 hover:text-brown-800 hover:bg-white/60 hover:border-brown-200'
-                }`}
-              >
-                {e.company}
-              </button>
-            ))}
-          </div>
-
-          {/* Experience detail */}
-          <div className="lg:col-span-2 bg-white border border-brown-100 rounded-2xl p-8 card-shadow">
-            <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
-              <div>
-                <h3 className="font-serif font-bold text-xl text-brown-900">{exp.role}</h3>
-                <p className="text-sage-600 text-sm mt-1 font-medium">{exp.company} — {exp.location}</p>
-              </div>
-              <div className="text-right">
-                <span className="text-xs text-brown-400 block">{exp.period}</span>
-                <span className={`inline-block mt-1.5 text-xs px-2.5 py-0.5 rounded-full border font-medium ${typeStyles[exp.type]}`}>
-                  {exp.type}
-                </span>
-              </div>
-            </div>
-
-            <ul className="space-y-3 mb-6">
-              {exp.highlights.map((h, i) => (
-                <li key={i} className="flex items-start gap-3 text-brown-600 text-sm leading-relaxed">
-                  <span className="text-sage-400 mt-1 flex-shrink-0">▸</span>
-                  {h}
-                </li>
-              ))}
-            </ul>
-
-            <div className="flex flex-wrap gap-2 pt-5 border-t border-brown-100">
-              {exp.stack.map((tech) => (
-                <span key={tech} className="text-xs px-2.5 py-1 rounded-md bg-brown-50 text-brown-500 border border-brown-200">
-                  {tech}
-                </span>
-              ))}
-            </div>
+        <div className={`flex items-end justify-between mb-12 reveal ${visible ? 'revealed' : ''}`}>
+          <div>
+            <span className="font-mono text-xs tracking-[0.18em] uppercase text-sapphire-500">03 — Experience</span>
+            <h2 className="font-serif text-[clamp(36px,5vw,64px)] text-shellstone-300 mt-3 leading-tight">
+              Where I&apos;ve Worked
+            </h2>
           </div>
         </div>
+        <div className="rule opacity-30 mb-0" />
+
+        {/* Accordion-style experience rows */}
+        {experiences.map((exp, i) => (
+          <div
+            key={exp.company}
+            className={`border-b border-sapphire-800/50 reveal reveal-delay-${i + 1} ${visible ? 'revealed' : ''}`}
+          >
+            {/* Row header — always visible */}
+            <button
+              onClick={() => setOpen(open === i ? null : i)}
+              className="w-full text-left py-8 flex items-start sm:items-center justify-between gap-6 group"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-8">
+                <span className="font-serif text-[clamp(22px,3vw,36px)] text-shellstone-300 group-hover:text-quicksand-400 transition-colors duration-300 leading-tight">
+                  {exp.company}
+                </span>
+                <span className="text-sm text-shellstone-600 tracking-wide">{exp.role}</span>
+              </div>
+              <div className="flex items-center gap-6 flex-shrink-0">
+                <span className="font-mono text-xs text-shellstone-600 hidden sm:block">{exp.period}</span>
+                <span className={`text-xl text-quicksand-400 transition-transform duration-300 ${open === i ? 'rotate-45' : ''}`}>+</span>
+              </div>
+            </button>
+
+            {/* Expandable details */}
+            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${open === i ? 'max-h-[600px] pb-10' : 'max-h-0'}`}>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-2">
+                <div className="lg:col-span-2 space-y-3">
+                  {exp.highlights.map((h, j) => (
+                    <div key={j} className="flex gap-4 text-sm text-shellstone-500 leading-relaxed">
+                      <span className="text-quicksand-400 flex-shrink-0 mt-0.5">—</span>
+                      <span>{h}</span>
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <div className="flex flex-wrap gap-2">
+                    {exp.stack.map(tech => (
+                      <span key={tech} className="text-xs px-3 py-1.5 rounded-full border border-sapphire-700/50 text-shellstone-500 bg-sapphire-900/20">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-4">
+                    <span className={`inline-block text-xs font-medium tracking-[0.12em] uppercase px-3 py-1 rounded-full border ${
+                      exp.type === 'Full-time'  ? 'border-quicksand-400/30 text-quicksand-400' :
+                      exp.type === 'Contract'   ? 'border-shellstone-400/30 text-shellstone-400' :
+                                                  'border-sapphire-400/30 text-sapphire-400'
+                    }`}>{exp.type}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
 
         {/* Education */}
-        <div className={`mt-10 p-6 bg-white border border-brown-100 rounded-2xl card-shadow transition-all duration-700 delay-400 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <p className="text-xs text-brown-400 tracking-widest uppercase mb-3 font-medium">Education</p>
-          <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className={`mt-16 pt-12 border-t border-sapphire-800/30 reveal reveal-delay-4 ${visible ? 'revealed' : ''}`}>
+          <span className="font-mono text-xs tracking-[0.18em] uppercase text-sapphire-500 block mb-6">Education</span>
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             <div>
-              <p className="font-serif font-semibold text-brown-900 text-lg">Bachelor of Science in Computer Science</p>
-              <p className="text-sage-600 text-sm mt-1 font-medium">Wayne State University — Detroit, MI</p>
+              <h3 className="font-serif text-[clamp(20px,2.5vw,30px)] text-shellstone-300 leading-tight">
+                B.S. Computer Science
+              </h3>
+              <p className="text-shellstone-500 text-sm mt-2">Wayne State University — Detroit, MI</p>
             </div>
-            <div className="flex flex-wrap gap-3 text-xs text-brown-400 font-medium">
+            <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-shellstone-600 tracking-wide sm:text-right">
               <span>Hackathon Team Lead</span>
-              <span className="text-brown-200">|</span>
               <span>Capstone Team Lead</span>
-              <span className="text-brown-200">|</span>
               <span>BSA President</span>
             </div>
           </div>
         </div>
+
       </div>
     </section>
   )

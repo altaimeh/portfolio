@@ -3,20 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 
 const links = [
-  {
-    label: 'LinkedIn',
-    value: 'linkedin.com/in/altaimee',
-    href: 'https://linkedin.com/in/altaimee',
-    icon: 'in',
-    mono: 'https://',
-  },
-  {
-    label: 'GitHub',
-    value: 'github.com/altaimeh',
-    href: 'https://github.com/altaimeh',
-    icon: 'gh',
-    mono: 'https://',
-  },
+  { label: 'LinkedIn', value: 'linkedin.com/in/altaimee', href: 'https://linkedin.com/in/altaimee', icon: 'in' },
+  { label: 'GitHub',   value: 'github.com/altaimeh',     href: 'https://github.com/altaimeh',      icon: 'gh' },
 ]
 
 export default function Contact() {
@@ -25,73 +13,62 @@ export default function Contact() {
 
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
-      { threshold: 0.1 }
+      ([e]) => { if (e.isIntersecting) setVisible(true) },
+      { threshold: 0.05 }
     )
     if (ref.current) obs.observe(ref.current)
     return () => obs.disconnect()
   }, [])
 
   return (
-    <section id="contact" ref={ref} className="py-28 relative bg-white">
-      <div className="absolute top-0 left-0 right-0 h-px bg-brown-100" />
+    <section id="contact" ref={ref} className="bg-[#0D1A35] px-8 sm:px-12 pt-28 pb-16">
+      <div className="max-w-7xl mx-auto">
 
-      <div className="max-w-5xl mx-auto px-6 relative z-10">
-        <div className={`mb-14 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <p className="text-xs text-sage-500 font-medium tracking-widest uppercase mb-2">05 — Contact</p>
-          <h2 className="font-serif font-bold text-4xl sm:text-5xl text-brown-900">
-            Let&apos;s Connect
+        <div className={`mb-16 reveal ${visible ? 'revealed' : ''}`}>
+          <span className="font-mono text-xs tracking-[0.18em] uppercase text-sapphire-500 block mb-6">05 — Contact</span>
+          {/* Large CTA headline */}
+          <h2 className="font-serif leading-[0.95] tracking-tight">
+            <span className="block text-[clamp(48px,7vw,110px)] text-shellstone-300">Let&apos;s build</span>
+            <span className="block text-[clamp(48px,7vw,110px)] text-quicksand-400">something.</span>
           </h2>
-          <div className="section-divider mt-4" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* CTA text */}
-          <div className={`transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <p className="text-brown-600 text-base leading-relaxed mb-6">
-              I&apos;m currently open to new full-stack and software engineering roles. Whether you have a question, an opportunity, or just want to say hi — my inbox is always open.
-            </p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sage-50 border border-sage-200">
-              <span className="w-2 h-2 rounded-full bg-sage-500 animate-pulse" />
-              <span className="text-xs text-sage-700 font-medium">Open to work</span>
-            </div>
-          </div>
+        <div className="rule opacity-30 mb-14" />
 
-          {/* Links */}
-          <div className={`space-y-3 transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            {links.map((link, i) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 bg-brown-50 border border-brown-100 rounded-xl card-shadow group transition-all duration-200 hover:border-sage-200 hover:bg-white"
-                style={{ transitionDelay: `${i * 60}ms` }}
-              >
-                <span className="w-9 h-9 flex items-center justify-center rounded-lg bg-white font-mono text-xs text-sage-600 border border-brown-200 flex-shrink-0 font-semibold">
+        {/* Links row */}
+        <div className={`grid grid-cols-1 sm:grid-cols-2 gap-px bg-sapphire-800/30 rounded-xl overflow-hidden mb-16 reveal reveal-delay-2 ${visible ? 'revealed' : ''}`}>
+          {links.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between gap-4 px-8 py-7 bg-[#0D1A35] hover:bg-royal-800/60 transition-colors duration-300 group"
+            >
+              <div className="flex items-center gap-5">
+                <span className="w-9 h-9 rounded-lg bg-sapphire-900/60 border border-sapphire-700/50 flex items-center justify-center font-mono text-xs font-semibold text-quicksand-400">
                   {link.icon}
                 </span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs text-brown-400 tracking-widest uppercase font-medium mb-0.5">{link.label}</p>
-                  <p className="text-brown-700 text-sm truncate group-hover:text-sage-600 transition-colors duration-200">
-                    {link.value.replace('mailto:', '').replace('https://', '').replace('tel:', '')}
-                  </p>
+                <div>
+                  <p className="text-xs font-medium tracking-[0.12em] uppercase text-shellstone-600 mb-1">{link.label}</p>
+                  <p className="text-sm text-shellstone-300 group-hover:text-quicksand-300 transition-colors duration-300">{link.value}</p>
                 </div>
-                <span className="text-brown-300 group-hover:text-sage-500 transition-colors duration-200">↗</span>
-              </a>
-            ))}
-          </div>
+              </div>
+              <span className="text-shellstone-600 group-hover:text-quicksand-400 transition-colors duration-300 text-lg">↗</span>
+            </a>
+          ))}
         </div>
 
         {/* Footer */}
-        <div className={`mt-24 pt-8 border-t border-brown-100 flex flex-wrap items-center justify-between gap-4 transition-all duration-700 delay-500 ${visible ? 'opacity-100' : 'opacity-0'}`}>
-          <span className="text-xs text-brown-400 font-medium">
+        <div className={`flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-sapphire-800/40 reveal reveal-delay-3 ${visible ? 'revealed' : ''}`}>
+          <span className="text-xs text-shellstone-700 tracking-wide">
             Al-Taimee Hassan © {new Date().getFullYear()}
           </span>
-          <span className="text-xs text-brown-300">
-            Built with Next.js · TypeScript · Tailwind CSS
+          <span className="text-xs text-shellstone-700 tracking-wide">
+            Next.js · TypeScript · Tailwind CSS
           </span>
         </div>
+
       </div>
     </section>
   )

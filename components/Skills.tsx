@@ -3,31 +3,16 @@
 import { useEffect, useRef, useState } from 'react'
 
 const skillGroups = [
-  {
-    category: 'Languages',
-    skills: ['TypeScript', 'Java', 'JavaScript (ES6+)', 'SQL'],
-  },
-  {
-    category: 'Frontend',
-    skills: ['React.js', 'Next.js', 'HTML5 / CSS3', 'Tailwind CSS', 'Webpack', 'Jest'],
-  },
-  {
-    category: 'Backend',
-    skills: ['Spring Boot', 'REST APIs', 'Microservices', 'SNS/SQS', 'Node.js', 'Ruby on Rails'],
-  },
-  {
-    category: 'Cloud & DevOps',
-    skills: ['AWS Cloud Services', 'Docker', 'Terraform', 'CI/CD Pipelines', 'GitLab', 'Serverless'],
-  },
-  {
-    category: 'Tools & Methods',
-    skills: ['Agile / Scrum', 'Jira', 'Postman', 'Power BI', 'LangChain', 'LLMs'],
-  },
+  { category: 'Languages',      skills: ['TypeScript', 'Java', 'JavaScript (ES6+)', 'SQL'] },
+  { category: 'Frontend',       skills: ['React.js', 'Next.js', 'HTML5 / CSS3', 'Tailwind CSS', 'Webpack', 'Jest'] },
+  { category: 'Backend',        skills: ['Spring Boot', 'REST APIs', 'Microservices', 'SNS/SQS', 'Node.js', 'Ruby on Rails'] },
+  { category: 'Cloud & DevOps', skills: ['AWS Cloud Services', 'Docker', 'Terraform', 'CI/CD Pipelines', 'GitLab', 'Serverless'] },
+  { category: 'Tools',          skills: ['Agile / Scrum', 'Jira', 'Postman', 'Power BI', 'LangChain', 'LLMs'] },
 ]
 
 const certs = [
-  { name: 'AWS Certified Cloud Practitioner', abbr: 'CLF-C02' },
-  { name: 'AWS Certified AI Practitioner', abbr: 'AIF-C01' },
+  { abbr: 'CLF-C02', name: 'AWS Certified Cloud Practitioner' },
+  { abbr: 'AIF-C01', name: 'AWS Certified AI Practitioner' },
 ]
 
 export default function Skills() {
@@ -36,72 +21,69 @@ export default function Skills() {
 
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
-      { threshold: 0.1 }
+      ([e]) => { if (e.isIntersecting) setVisible(true) },
+      { threshold: 0.05 }
     )
     if (ref.current) obs.observe(ref.current)
     return () => obs.disconnect()
   }, [])
 
   return (
-    <section id="skills" ref={ref} className="py-28 relative bg-white">
-      <div className="absolute top-0 left-0 right-0 h-px bg-brown-100" />
+    <section id="skills" ref={ref} className="bg-[#0A1628] px-8 sm:px-12 py-28">
+      <div className="max-w-7xl mx-auto">
 
-      <div className="max-w-5xl mx-auto px-6">
-
-        {/* Section label */}
-        <div className={`mb-14 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <p className="text-xs text-sage-500 font-medium tracking-widest uppercase mb-2">02 — Skills</p>
-          <h2 className="font-serif font-bold text-4xl sm:text-5xl text-brown-900">
-            Technical Arsenal
-          </h2>
-          <div className="section-divider mt-4" />
+        {/* Section header */}
+        <div className={`flex items-end justify-between mb-12 reveal ${visible ? 'revealed' : ''}`}>
+          <div>
+            <span className="font-mono text-xs tracking-[0.18em] uppercase text-sapphire-500">02 — Skills</span>
+            <h2 className="font-serif text-[clamp(36px,5vw,64px)] text-shellstone-300 mt-3 leading-tight">
+              Technical Arsenal
+            </h2>
+          </div>
         </div>
+        <div className="rule mb-0 opacity-30" />
 
-        {/* Skill groups grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-          {skillGroups.map((group, i) => (
-            <div
-              key={group.category}
-              className={`bg-brown-50 border border-brown-100 rounded-xl p-6 card-shadow transition-all duration-700 hover:border-sage-200 ${
-                visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-              style={{ transitionDelay: `${i * 80}ms` }}
-            >
-              <h3 className="font-semibold text-brown-800 text-sm mb-4 tracking-wide">
+        {/* Category rows */}
+        {skillGroups.map((group, i) => (
+          <div
+            key={group.category}
+            className={`border-b border-sapphire-800/50 py-7 flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-0 reveal reveal-delay-${i + 1} ${visible ? 'revealed' : ''}`}
+          >
+            {/* Category name */}
+            <div className="sm:w-48 flex-shrink-0">
+              <span className="text-xs font-medium tracking-[0.14em] uppercase text-shellstone-600">
                 {group.category}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {group.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="text-xs px-2.5 py-1 rounded-md bg-white text-brown-600 border border-brown-200 hover:border-sage-300 hover:text-sage-700 transition-colors duration-200"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
+              </span>
             </div>
-          ))}
-        </div>
+            {/* Skills */}
+            <div className="flex flex-wrap gap-2">
+              {group.skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="text-sm text-shellstone-400 px-3 py-1.5 rounded-full border border-sapphire-700/50 bg-sapphire-900/30 hover:border-quicksand-400/40 hover:text-quicksand-300 transition-all duration-300"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
 
         {/* Certifications */}
-        <div
-          className={`transition-all duration-700 delay-500 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-        >
-          <p className="text-xs text-brown-400 tracking-widest uppercase mb-4 font-medium">Certifications</p>
-          <div className="flex flex-wrap gap-3">
+        <div className={`mt-16 reveal reveal-delay-6 ${visible ? 'revealed' : ''}`}>
+          <span className="font-mono text-xs tracking-[0.18em] uppercase text-sapphire-500 block mb-6">
+            Certifications
+          </span>
+          <div className="flex flex-wrap gap-4">
             {certs.map((cert) => (
-              <div
-                key={cert.name}
-                className="flex items-center gap-3 px-5 py-3 rounded-xl border border-sage-200 bg-sage-50 hover:bg-sage-100 transition-colors duration-200"
-              >
-                <span className="font-mono text-sage-600 text-xs font-semibold">{cert.abbr}</span>
-                <span className="text-brown-700 text-sm">{cert.name}</span>
+              <div key={cert.name} className="flex items-center gap-3 px-5 py-3 rounded-full border border-quicksand-400/20 bg-royal-800/30 hover:border-quicksand-400/45 transition-all duration-300">
+                <span className="font-mono text-xs font-semibold text-quicksand-400">{cert.abbr}</span>
+                <span className="text-sm text-shellstone-400">{cert.name}</span>
               </div>
             ))}
           </div>
         </div>
+
       </div>
     </section>
   )
