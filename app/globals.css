@@ -66,3 +66,29 @@ body {
 /* Blink */
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 .animate-blink { animation: blink 1s step-end infinite; }
+
+/* ── Form elements ───────────────────────────────────────────────────── */
+input, textarea, select {
+  background-color: transparent;
+  color: inherit;
+}
+
+/* Select dropdown options — dark background cross-browser */
+select option {
+  background-color: #0D1A35;
+  color: #D9CBC2;
+}
+
+/* Remove default autofill yellow tint */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #0D1A35 inset !important;
+  -webkit-text-fill-color: #D9CBC2 !important;
+  caret-color: #D9CBC2;
+}
+
+/* Spinner animation for loading state */
+@keyframes spin { to { transform: rotate(360deg); } }
+.animate-spin { animation: spin 0.8s linear infinite; }

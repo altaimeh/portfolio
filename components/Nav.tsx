@@ -24,7 +24,7 @@ export default function Nav() {
     }`}>
       <div className="max-w-7xl mx-auto px-8 sm:px-12 py-6 flex items-center justify-between">
         {/* Wordmark */}
-        <a href="#hero" className="font-sans text-sm font-600 tracking-[0.18em] uppercase text-shellstone-300 hover:text-quicksand-400 transition-colors duration-300">
+        <a href="#hero" className="font-sans text-sm font-semibold tracking-[0.18em] uppercase text-shellstone-300 hover:text-quicksand-400 transition-colors duration-300">
           Al-Taimee Hassan
         </a>
 

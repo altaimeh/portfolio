@@ -67,7 +67,7 @@ export default function Experience() {
         <div className={`flex items-end justify-between mb-12 reveal ${visible ? 'revealed' : ''}`}>
           <div>
             <span className="font-mono text-xs tracking-[0.18em] uppercase text-sapphire-500">03 — Experience</span>
-            <h2 className="font-serif text-[clamp(36px,5vw,64px)] text-shellstone-300 mt-3 leading-tight">
+            <h2 className="font-serif text-shellstone-300 mt-3 leading-tight" style={{ fontSize: 'clamp(36px,5vw,64px)' }}>
               Where I&apos;ve Worked
             </h2>
           </div>
@@ -86,7 +86,7 @@ export default function Experience() {
               className="w-full text-left py-8 flex items-start sm:items-center justify-between gap-6 group"
             >
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-8">
-                <span className="font-serif text-[clamp(22px,3vw,36px)] text-shellstone-300 group-hover:text-quicksand-400 transition-colors duration-300 leading-tight">
+                <span className="font-serif text-shellstone-300 group-hover:text-quicksand-400 transition-colors duration-300 leading-tight" style={{ fontSize: 'clamp(22px,3vw,36px)' }}>
                   {exp.company}
                 </span>
                 <span className="text-sm text-shellstone-600 tracking-wide">{exp.role}</span>
@@ -134,7 +134,7 @@ export default function Experience() {
           <span className="font-mono text-xs tracking-[0.18em] uppercase text-sapphire-500 block mb-6">Education</span>
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             <div>
-              <h3 className="font-serif text-[clamp(20px,2.5vw,30px)] text-shellstone-300 leading-tight">
+              <h3 className="font-serif text-shellstone-300 leading-tight" style={{ fontSize: 'clamp(20px,2.5vw,30px)' }}>
                 B.S. Computer Science
               </h3>
               <p className="text-shellstone-500 text-sm mt-2">Wayne State University — Detroit, MI</p>

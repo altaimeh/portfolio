@@ -10,10 +10,10 @@ const ROLES = [
 ]
 
 export default function Hero() {
-  const [roleIndex, setRoleIndex]   = useState(0)
-  const [displayed, setDisplayed]   = useState('')
-  const [deleting, setDeleting]     = useState(false)
-  const [visible, setVisible]       = useState(false)
+  const [roleIndex, setRoleIndex] = useState(0)
+  const [displayed, setDisplayed] = useState('')
+  const [deleting, setDeleting]   = useState(false)
+  const [visible, setVisible]     = useState(false)
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 80)
@@ -36,70 +36,97 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-end pb-20 px-8 sm:px-12 bg-[#0A1628] overflow-hidden"
+      className="relative min-h-screen flex flex-col justify-end pb-20 px-8 sm:px-12 bg-ink overflow-hidden"
     >
-      {/* Subtle radial glow top-left */}
-      <div className="absolute top-0 left-0 w-[800px] h-[800px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle at 20% 20%, rgba(60,80,112,0.28) 0%, transparent 65%)' }} />
+      {/* Radial glow */}
+      <div
+        className="absolute top-0 left-0 w-[800px] h-[800px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle at 20% 20%, rgba(60,80,112,0.28) 0%, transparent 65%)' }}
+      />
 
-      {/* Top rule + available label */}
-      <div className="absolute top-0 left-0 right-0">
-        <div className="rule opacity-30" />
-      </div>
+      {/* Top rule */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-sapphire-800/50" />
 
-      {/* Available tag — top right */}
-      <div className={`absolute top-8 right-8 sm:right-12 flex items-center gap-2 transition-all duration-700 delay-300 ${visible ? 'opacity-100' : 'opacity-0'}`}>
+      {/* Available tag */}
+      <div
+        className="absolute top-8 right-8 sm:right-12 flex items-center gap-2 transition-all duration-700"
+        style={{ opacity: visible ? 1 : 0, transitionDelay: '0.3s' }}
+      >
         <span className="w-1.5 h-1.5 rounded-full bg-quicksand-400 animate-pulse" />
         <span className="text-xs font-medium tracking-[0.14em] uppercase text-shellstone-500">
           Available for opportunities
         </span>
       </div>
 
-      {/* Main content — bottom-aligned, editorial */}
-      <div className="max-w-7xl w-full mx-auto">
-        {/* Index label */}
-        <div className={`mb-6 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      <div className="max-w-7xl w-full mx-auto relative z-10">
+
+        {/* Section index */}
+        <div
+          className="mb-6 transition-all duration-700"
+          style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(16px)', transitionDelay: '0s' }}
+        >
           <span className="font-mono text-xs tracking-[0.18em] uppercase text-sapphire-500">01 — About</span>
         </div>
 
         {/* Giant name */}
         <h1 className="font-serif leading-[0.9] tracking-tight mb-10">
           <span
-            className={`block text-[clamp(64px,10vw,148px)] text-shellstone-300 transition-all duration-900 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-            style={{ transitionDelay: '0.05s' }}
+            className="block text-shellstone-300 transition-all duration-700"
+            style={{
+              fontSize: 'clamp(64px, 10vw, 148px)',
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'translateY(0)' : 'translateY(24px)',
+              transitionDelay: '0.08s',
+            }}
           >
             Al-Taimee
           </span>
           <span
-            className={`block text-[clamp(64px,10vw,148px)] text-quicksand-400 transition-all duration-900 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-            style={{ transitionDelay: '0.15s' }}
+            className="block text-quicksand-400 transition-all duration-700"
+            style={{
+              fontSize: 'clamp(64px, 10vw, 148px)',
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'translateY(0)' : 'translateY(24px)',
+              transitionDelay: '0.18s',
+            }}
           >
             Hassan.
           </span>
         </h1>
 
-        {/* Bottom row — typewriter left, description right */}
-        <div className={`rule mb-8 transition-all duration-700 ${visible ? 'opacity-50' : 'opacity-0'}`} style={{ transitionDelay: '0.3s' }} />
+        {/* Rule */}
         <div
-          className={`flex flex-col sm:flex-row sm:items-end justify-between gap-8 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-          style={{ transitionDelay: '0.35s' }}
+          className="h-px bg-sapphire-800/50 mb-8 transition-all duration-700"
+          style={{ opacity: visible ? 0.5 : 0, transitionDelay: '0.3s' }}
+        />
+
+        {/* Bottom row */}
+        <div
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-8 transition-all duration-700"
+          style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(16px)', transitionDelay: '0.35s' }}
         >
-          {/* Role typewriter */}
+          {/* Typewriter role */}
           <div className="font-mono text-sm text-shellstone-400 tracking-wide">
             <span>{displayed}</span>
             <span className="animate-blink text-quicksand-400">_</span>
           </div>
 
-          {/* Description + CTA */}
+          {/* Description + CTAs */}
           <div className="flex flex-col sm:flex-row sm:items-end gap-8 sm:gap-16">
             <p className="text-sm text-shellstone-600 leading-relaxed max-w-xs">
               3+ years building enterprise-scale distributed systems and production-grade React applications.
             </p>
             <div className="flex items-center gap-8 flex-shrink-0">
-              <a href="#experience" className="text-sm font-medium text-shellstone-300 hover:text-quicksand-400 transition-colors duration-300 link-hover tracking-wide">
+              <a
+                href="#experience"
+                className="text-sm font-medium text-shellstone-300 hover:text-quicksand-400 transition-colors duration-300 link-hover tracking-wide"
+              >
                 View Work ↓
               </a>
-              <a href="#contact" className="text-sm font-medium text-shellstone-300 hover:text-quicksand-400 transition-colors duration-300 link-hover tracking-wide">
+              <a
+                href="#contact"
+                className="text-sm font-medium text-shellstone-300 hover:text-quicksand-400 transition-colors duration-300 link-hover tracking-wide"
+              >
                 Contact ↓
               </a>
             </div>

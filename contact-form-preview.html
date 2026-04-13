@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Form Preview — Al-Taimee Hassan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #0A1628;
+      --royal:     #0D1A35;
+      --royal-mid: #112250;
+      --sapphire:  #3C5070;
+      --sapp-mid:  #4A6285;
+      --sapp-light:#5A749A;
+      --sapp-dark: #253345;
+      --qs:        #E0C58F;
+      --qs-light:  #EAD4A8;
+      --qs-dim:    #C9A360;
+      --ss:        #D9CBC2;
+      --ss-mid:    #BFB0A8;
+      --ss-dim:    #8C7E75;
+      --ss-faint:  #4A3F38;
+      --error:     #E07A7A;
+      --success:   #7ABF8A;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Sora', system-ui, sans-serif;
+      background: var(--royal);
+      color: var(--ss);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── RULE ── */
+    .rule { width: 100%; height: 1px; background: rgba(60,80,112,0.45); }
+
+    /* ── LABEL CHIP ── */
+    .sec-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--sapp-light);
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page {
+      max-width: 1280px; margin: 0 auto;
+      padding: 80px 48px 80px;
+    }
+
+    /* ── SECTION HEADING ── */
+    .contact-heading {
+      font-family: 'DM Serif Display', serif;
+      line-height: .95; letter-spacing: -.02em;
+      margin-bottom: 52px;
+    }
+    .contact-heading .line1 { display: block; font-size: clamp(48px, 7vw, 110px); color: var(--ss-mid); }
+    .contact-heading .line2 { display: block; font-size: clamp(48px, 7vw, 110px); color: var(--qs); }
+
+    /* ── LAYOUT GRID ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 80px;
+      align-items: start;
+      padding-top: 48px;
+    }
+    @media (max-width: 860px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .page { padding: 60px 24px; }
+    }
+
+    /* ── LEFT COLUMN ── */
+    .contact-info { display: flex; flex-direction: column; gap: 40px; }
+    .contact-blurb {
+      font-size: 15px; color: var(--ss-dim); line-height: 1.85;
+    }
+
+    .info-block { display: flex; flex-direction: column; gap: 14px; }
+    .info-row {
+      display: flex; align-items: center; gap: 14px;
+      text-decoration: none;
+      padding: 14px 18px;
+      border: 1px solid rgba(60,80,112,0.45);
+      border-radius: 12px;
+      background: rgba(10,22,40,0.5);
+      transition: border-color .3s, background .3s;
+      group: true;
+    }
+    .info-row:hover {
+      border-color: rgba(224,197,143,0.3);
+      background: rgba(17,34,80,0.6);
+    }
+    .info-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: rgba(37,51,69,0.8); border: 1px solid rgba(60,80,112,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      font-weight: 600; color: var(--qs); flex-shrink: 0;
+    }
+    .info-text { display: flex; flex-direction: column; gap: 2px; }
+    .info-label { font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ss-dim); }
+    .info-value { font-size: 13px; color: var(--ss-mid); transition: color .3s; }
+    .info-row:hover .info-value { color: var(--qs-light); }
+    .info-arrow { margin-left: auto; color: var(--sapp-mid); font-size: 16px; transition: color .3s; }
+    .info-row:hover .info-arrow { color: var(--qs); }
+
+    /* availability badge */
+    .avail-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 16px; border-radius: 999px;
+      border: 1px solid rgba(224,197,143,0.22);
+      background: rgba(17,34,80,0.4);
+      width: fit-content;
+    }
+    .avail-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--qs);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+    .avail-text { font-size: 12px; font-weight: 500; color: var(--qs-light); letter-spacing: .04em; }
+
+    /* ── RIGHT COLUMN — FORM ── */
+    .form-card {
+      background: rgba(10,22,40,0.55);
+      border: 1px solid rgba(60,80,112,0.45);
+      border-radius: 20px;
+      padding: 40px 44px;
+      backdrop-filter: blur(8px);
+    }
+
+    .form-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px; color: var(--ss-mid);
+      margin-bottom: 8px;
+    }
+    .form-subtitle {
+      font-size: 13px; color: var(--ss-dim); line-height: 1.6;
+      margin-bottom: 36px;
+    }
+
+    /* field groups */
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+
+    .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .field:last-of-type { margin-bottom: 0; }
+
+    .field label {
+      font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ss-dim);
+    }
+    .field label .req { color: var(--qs); margin-left: 2px; }
+
+    /* input base */
+    .field input,
+    .field select,
+    .field textarea {
+      background: rgba(17,34,80,0.45);
+      border: 1px solid rgba(60,80,112,0.5);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-family: 'Sora', sans-serif;
+      font-size: 14px;
+      color: var(--ss-mid);
+      outline: none;
+      transition: border-color .25s, background .25s, box-shadow .25s;
+      width: 100%;
+      -webkit-appearance: none;
+    }
+    .field input::placeholder,
+    .field textarea::placeholder { color: rgba(140,126,117,0.55); }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: rgba(224,197,143,0.45);
+      background: rgba(17,34,80,0.65);
+      box-shadow: 0 0 0 3px rgba(224,197,143,0.07);
+    }
+
+    /* filled state visual */
+    .field input.filled,
+    .field textarea.filled {
+      border-color: rgba(224,197,143,0.28);
+    }
+
+    /* error state */
+    .field input.error,
+    .field textarea.error {
+      border-color: rgba(224,122,122,0.5);
+      box-shadow: 0 0 0 3px rgba(224,122,122,0.07);
+    }
+    .field .err-msg {
+      font-size: 11px; color: var(--error);
+      display: none;
+      margin-top: 4px;
+    }
+    .field .err-msg.visible { display: block; }
+
+    /* select arrow */
+    .field select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235A749A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+    .field select option { background: #0D1A35; color: var(--ss-mid); }
+
+    /* textarea */
+    .field textarea { resize: vertical; min-height: 120px; line-height: 1.65; }
+
+    /* char counter */
+    .char-row { display: flex; justify-content: flex-end; margin-top: 4px; }
+    .char-count { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ss-dim); }
+    .char-count.warn { color: var(--qs); }
+    .char-count.over { color: var(--error); }
+
+    /* form divider */
+    .form-rule { width: 100%; height: 1px; background: rgba(60,80,112,0.35); margin: 28px 0; }
+
+    /* submit area */
+    .submit-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .submit-note { font-size: 12px; color: var(--ss-dim); line-height: 1.5; max-width: 240px; }
+
+    /* submit button */
+    .btn-submit {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 32px;
+      background: var(--qs);
+      color: var(--ink);
+      font-family: 'Sora', sans-serif;
+      font-size: 14px; font-weight: 600;
+      border: none; border-radius: 10px; cursor: pointer;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(224,197,143,0.2);
+      position: relative; overflow: hidden;
+      flex-shrink: 0;
+    }
+    .btn-submit:hover {
+      background: var(--qs-light);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px rgba(224,197,143,0.3);
+    }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit .arrow { font-size: 16px; transition: transform .25s; }
+    .btn-submit:hover .arrow { transform: translateX(3px); }
+
+    /* loading state */
+    .btn-submit.loading { opacity: .7; pointer-events: none; }
+    .btn-submit.loading .btn-text { opacity: 0; }
+    .btn-submit .spinner {
+      display: none;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 18px; height: 18px; border: 2px solid rgba(10,22,40,0.3);
+      border-top-color: var(--ink); border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    .btn-submit.loading .spinner { display: block; }
+    @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+    /* ── SUCCESS STATE ── */
+    .success-state {
+      display: none;
+      flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 64px 32px;
+      gap: 20px;
+    }
+    .success-state.show { display: flex; }
+    .form-fields.hidden { display: none; }
+
+    .success-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      border: 1.5px solid rgba(122,191,138,0.4);
+      background: rgba(122,191,138,0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      animation: popIn .5s cubic-bezier(.16,1,.3,1) both;
+    }
+    @keyframes popIn { from{opacity:0;transform:scale(.6)} to{opacity:1;transform:scale(1)} }
+    .success-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px; color: var(--ss-mid);
+    }
+    .success-sub { font-size: 14px; color: var(--ss-dim); line-height: 1.7; max-width: 300px; }
+    .btn-reset {
+      margin-top: 8px; font-size: 13px; font-weight: 500;
+      color: var(--ss-dim); background: none; border: none; cursor: pointer;
+      text-decoration: underline; text-underline-offset: 3px;
+      transition: color .2s;
+    }
+    .btn-reset:hover { color: var(--qs); }
+
+    /* ── BOTTOM LINKS ── */
+    .contact-links-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: rgba(60,80,112,0.3);
+      border-radius: 14px; overflow: hidden;
+      margin-top: 52px;
+    }
+    .contact-link-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 28px; background: var(--royal);
+      text-decoration: none; transition: background .3s;
+    }
+    .contact-link-item:hover { background: rgba(17,34,80,0.85); }
+    .cl-left { display: flex; align-items: center; gap: 14px; }
+    .cl-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: rgba(37,51,69,0.7); border: 1px solid rgba(60,80,112,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--qs);
+    }
+    .cl-lbl { font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ss-dim); margin-bottom: 3px; }
+    .cl-val { font-size: 13px; color: var(--ss-mid); transition: color .3s; }
+    .contact-link-item:hover .cl-val { color: var(--qs-light); }
+    .cl-arrow { color: var(--sapp-mid); font-size: 16px; transition: color .3s; }
+    .contact-link-item:hover .cl-arrow { color: var(--qs); }
+
+    @media (max-width: 600px) { .contact-links-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Section label -->
+  <span class="sec-label" style="display:block; margin-bottom:16px;">05 — Contact</span>
+
+  <!-- Big heading -->
+  <div class="contact-heading">
+    <span class="line1">Let's build</span>
+    <span class="line2">something.</span>
+  </div>
+
+  <div class="rule" style="opacity:.3; margin-bottom:0;"></div>
+
+  <!-- Two-column layout -->
+  <div class="contact-grid">
+
+    <!-- LEFT — info -->
+    <div class="contact-info">
+      <p class="contact-blurb">
+        I'm currently open to full-stack and software engineering roles. Whether you have an opportunity, a project, or just want to connect — send a message and I'll get back to you within 24 hours.
+      </p>
+
+      <div class="avail-badge">
+        <span class="avail-dot"></span>
+        <span class="avail-text">Open to new opportunities</span>
+      </div>
+
+      <div class="info-block">
+        <a href="https://linkedin.com/in/altaimee" target="_blank" class="info-row">
+          <span class="info-icon">in</span>
+          <div class="info-text">
+            <span class="info-label">LinkedIn</span>
+            <span class="info-value">linkedin.com/in/altaimee</span>
+          </div>
+          <span class="info-arrow">↗</span>
+        </a>
+        <a href="https://github.com/altaimeh" target="_blank" class="info-row">
+          <span class="info-icon">gh</span>
+          <div class="info-text">
+            <span class="info-label">GitHub</span>
+            <span class="info-value">github.com/altaimeh</span>
+          </div>
+          <span class="info-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- RIGHT — form card -->
+    <div class="form-card">
+
+      <!-- Form fields -->
+      <div class="form-fields" id="formFields">
+        <h3 class="form-title">Send a message</h3>
+        <p class="form-subtitle">I'll respond to every message personally — usually within a day.</p>
+
+        <form id="contactForm" novalidate>
+
+          <!-- Name + Email row -->
+          <div class="field-row">
+            <div class="field">
+              <label for="name">Name <span class="req">*</span></label>
+              <input
+                type="text" id="name" name="name"
+                placeholder="Your name"
+                autocomplete="name"
+              />
+              <span class="err-msg">Please enter your name.</span>
+            </div>
+            <div class="field">
+              <label for="email">Email <span class="req">*</span></label>
+              <input
+                type="email" id="email" name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+              />
+              <span class="err-msg">Please enter a valid email.</span>
+            </div>
+          </div>
+
+          <!-- Subject / type -->
+          <div class="field">
+            <label for="subject">I'm reaching out about</label>
+            <select id="subject" name="subject">
+              <option value="" disabled selected>Select a topic</option>
+              <option value="opportunity">Job opportunity</option>
+              <option value="freelance">Freelance / contract work</option>
+              <option value="collaboration">Collaboration</option>
+              <option value="question">General question</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+
+          <!-- Message -->
+          <div class="field">
+            <label for="message">Message <span class="req">*</span></label>
+            <textarea
+              id="message" name="message"
+              placeholder="Tell me a bit about what you have in mind..."
+              maxlength="1000"
+              oninput="updateCharCount(this)"
+            ></textarea>
+            <div class="char-row">
+              <span class="char-count" id="charCount">0 / 1000</span>
+            </div>
+            <span class="err-msg">Please write a message.</span>
+          </div>
+
+          <div class="form-rule"></div>
+
+          <div class="submit-row">
+            <p class="submit-note">Messages are stored securely — no spam, no sharing.</p>
+            <button type="submit" class="btn-submit" id="submitBtn">
+              <span class="btn-text" style="display:flex;align-items:center;gap:10px;">
+                Send message
+                <span class="arrow">→</span>
+              </span>
+              <span class="spinner"></span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Success state (shown after submit) -->
+      <div class="success-state" id="successState" style="display:none;">
+        <div class="success-icon">✓</div>
+        <h3 class="success-title">Message sent!</h3>
+        <p class="success-sub">Thanks for reaching out. I'll get back to you personally within 24 hours.</p>
+        <button class="btn-reset" onclick="resetForm()">Send another message</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── Char counter ──
+  function updateCharCount(el) {
+    var count = el.value.length;
+    var max = 1000;
+    var counter = document.getElementById('charCount');
+    counter.textContent = count + ' / ' + max;
+    counter.className = 'char-count' + (count > max * 0.9 ? ' warn' : '') + (count >= max ? ' over' : '');
+  }
+
+  // ── Show / hide error for a field ──
+  function setError(inputEl, show) {
+    var errSpan = inputEl.parentElement.querySelector('.err-msg');
+    if (show) {
+      inputEl.classList.add('error');
+      if (errSpan) errSpan.classList.add('visible');
+    } else {
+      inputEl.classList.remove('error');
+      if (errSpan) errSpan.classList.remove('visible');
+    }
+  }
+
+  // ── Clear errors on typing ──
+  ['name','email','message'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', function() { setError(el, false); });
+  });
+
+  // ── Validate ──
+  function validate() {
+    var ok = true;
+    var name    = document.getElementById('name');
+    var email   = document.getElementById('email');
+    var message = document.getElementById('message');
+
+    if (!name.value.trim()) {
+      setError(name, true); ok = false;
+    }
+    var emailVal = email.value.trim();
+    if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+      setError(email, true); ok = false;
+    }
+    if (!message.value.trim()) {
+      setError(message, true); ok = false;
+    }
+    return ok;
+  }
+
+  // ── Submit ──
+  function handleSubmit() {
+    if (!validate()) return;
+
+    var btn      = document.getElementById('submitBtn');
+    var btnText  = btn.querySelector('.btn-text');
+    var spinner  = btn.querySelector('.spinner');
+
+    // Loading state
+    btn.disabled       = true;
+    btnText.style.opacity = '0';
+    spinner.style.display = 'block';
+
+    // Simulate API call (1.6s)
+    setTimeout(function() {
+      spinner.style.display = 'none';
+      btnText.style.opacity = '1';
+      btn.disabled = false;
+
+      // Show success, hide form
+      document.getElementById('formFields').style.display  = 'none';
+      document.getElementById('successState').style.display = 'flex';
+    }, 1600);
+  }
+
+  // ── Wire up button ──
+  var submitBtn = document.getElementById('submitBtn');
+  submitBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    handleSubmit();
+  });
+
+  // Also catch form submit (Enter key etc.)
+  var form = document.getElementById('contactForm');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    handleSubmit();
+  });
+
+  // ── Reset ──
+  function resetForm() {
+    document.getElementById('contactForm').reset();
+    document.getElementById('charCount').textContent = '0 / 1000';
+    ['name','email','message'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) setError(el, false);
+    });
+    document.getElementById('formFields').style.display  = '';
+    document.getElementById('successState').style.display = 'none';
+  }
+</script>
+</body>
+</html>

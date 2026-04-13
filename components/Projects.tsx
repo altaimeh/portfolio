@@ -73,7 +73,7 @@ export default function Projects() {
         <div className={`flex items-end justify-between mb-12 reveal ${visible ? 'revealed' : ''}`}>
           <div>
             <span className="font-mono text-xs tracking-[0.18em] uppercase text-sapphire-500">04 — Projects</span>
-            <h2 className="font-serif text-[clamp(36px,5vw,64px)] text-shellstone-300 mt-3 leading-tight">
+            <h2 className="font-serif text-shellstone-300 mt-3 leading-tight" style={{ fontSize: 'clamp(36px,5vw,64px)' }}>
               Things I&apos;ve Built
             </h2>
           </div>
@@ -97,7 +97,7 @@ export default function Projects() {
                 <span className="font-mono text-xs text-shellstone-600 tracking-[0.18em] uppercase block mb-6">
                   Project {project.number}
                 </span>
-                <h3 className="font-serif text-[clamp(28px,3vw,44px)] text-shellstone-300 leading-tight mb-4 group-hover:text-quicksand-300 transition-colors duration-300">
+                <h3 className="font-serif text-shellstone-300 leading-tight mb-4 group-hover:text-quicksand-300 transition-colors duration-300" style={{ fontSize: 'clamp(28px,3vw,44px)' }}>
                   {project.title}
                 </h3>
                 <p className="text-sm text-shellstone-500 leading-relaxed mb-8 max-w-sm">

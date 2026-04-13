@@ -36,7 +36,7 @@ export default function Skills() {
         <div className={`flex items-end justify-between mb-12 reveal ${visible ? 'revealed' : ''}`}>
           <div>
             <span className="font-mono text-xs tracking-[0.18em] uppercase text-sapphire-500">02 — Skills</span>
-            <h2 className="font-serif text-[clamp(36px,5vw,64px)] text-shellstone-300 mt-3 leading-tight">
+            <h2 className="font-serif text-shellstone-300 mt-3 leading-tight" style={{ fontSize: 'clamp(36px,5vw,64px)' }}>
               Technical Arsenal
             </h2>
           </div>
