@@ -49,7 +49,7 @@ export default function Hero() {
 
       {/* Available tag */}
       <div
-        className="absolute top-8 right-8 sm:right-12 flex items-center gap-2 transition-all duration-700"
+        className="absolute top-[84px] right-8 sm:right-12 flex items-center gap-2 transition-all duration-700"
         style={{ opacity: visible ? 1 : 0, transitionDelay: '0.3s' }}
       >
         <span className="w-1.5 h-1.5 rounded-full bg-quicksand-400 animate-pulse" />

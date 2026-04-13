@@ -32,8 +32,12 @@ export async function POST(req: Request) {
       const { Resend } = await import('resend')
       const resend = new Resend(process.env.RESEND_API_KEY)
 
+      // NOTE: With Resend's free tier, `from` must be onboarding@resend.dev
+      // and `to` must be the email address that owns your Resend account.
+      // Once you verify a custom domain at resend.com/domains, update `from`
+      // to something like: Portfolio Contact <contact@yourdomain.com>
       const { error } = await resend.emails.send({
-        from:    'Portfolio Contact <onboarding@resend.dev>',   // update to your verified domain
+        from:    'Portfolio Contact <onboarding@resend.dev>',
         to:      [recipientEmail],
         replyTo: email,
         subject: `[Portfolio] ${subject} — from ${name}`,
