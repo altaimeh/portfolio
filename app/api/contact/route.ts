@@ -3,8 +3,8 @@ import { z } from 'zod'
 
 /* ── Validation schema ─────────────────────────────────────────────────── */
 const ContactSchema = z.object({
-  name:    z.string().min(2,  'Name must be at least 2 characters.').max(80),
-  email:   z.string().email('Please enter a valid email address.'),
+  name: z.string().min(2, 'Name must be at least 2 characters.').max(80),
+  email: z.string().email('Please enter a valid email address.'),
   subject: z.enum(['Full-time Role', 'Contract / Freelance', 'Collaboration', 'General Inquiry'], {
     error: () => 'Please select a subject.',
   }),
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     }
 
     const { name, email, subject, message } = parsed.data
-    const recipientEmail = process.env.CONTACT_EMAIL ?? 'altaimee@example.com'
+    const recipientEmail = process.env.CONTACT_EMAIL ?? 'taimeeh12@gmail.com'
 
     /* ── Send via Resend (requires RESEND_API_KEY in .env.local) ─────── */
     if (process.env.RESEND_API_KEY) {
@@ -37,8 +37,8 @@ export async function POST(req: Request) {
       // Once you verify a custom domain at resend.com/domains, update `from`
       // to something like: Portfolio Contact <contact@yourdomain.com>
       const { error } = await resend.emails.send({
-        from:    'Portfolio Contact <onboarding@resend.dev>',
-        to:      [recipientEmail],
+        from: 'Portfolio Contact <onboarding@resend.dev>',
+        to: [recipientEmail],
         replyTo: email,
         subject: `[Portfolio] ${subject} — from ${name}`,
         html: `
