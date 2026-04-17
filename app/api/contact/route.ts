@@ -88,7 +88,7 @@ export async function POST(req: Request) {
     // `replyTo` is set to the visitor's email so hitting "Reply" in Gmail
     // responds to them directly, not to the onboarding@resend.dev mailbox.
     const { data, error } = await resend.emails.send({
-      from: 'Portfolio Contact <onboarding@resend.dev>',
+      from: 'Someone on your website <onboarding@resend.dev>',
       to: [recipientEmail],
       replyTo: email,
       subject: `${subject} opportunity — from ${name}`,
@@ -115,7 +115,7 @@ export async function POST(req: Request) {
             ${message.replace(/\n/g, '<br/>')}
           </div>
           <p style="color:#999;font-size:12px;margin-top:24px">
-            Sent via portfolio contact form · altaimeehassan.com
+            Sent from your website.
           </p>
         </div>
       `,
