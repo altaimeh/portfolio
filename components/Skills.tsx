@@ -2,23 +2,43 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+// Structured list of skills rendered as one row per category.
+// Each object's `skills` array becomes a row of pill-shaped tags.
 const skillGroups = [
-  { category: 'Languages',      skills: ['TypeScript', 'Java', 'JavaScript (ES6+)', 'SQL'] },
-  { category: 'Frontend',       skills: ['React.js', 'Next.js', 'HTML5 / CSS3', 'Tailwind CSS', 'Webpack', 'Jest'] },
-  { category: 'Backend',        skills: ['Spring Boot', 'REST APIs', 'Microservices', 'SNS/SQS', 'Node.js', 'Ruby on Rails'] },
+  { category: 'Languages', skills: ['TypeScript', 'Java', 'JavaScript (ES6+)', 'SQL'] },
+  { category: 'Frontend', skills: ['React.js', 'Next.js', 'HTML5 / CSS3', 'Tailwind CSS', 'Webpack', 'Jest'] },
+  { category: 'Backend', skills: ['Spring Boot', 'REST APIs', 'Microservices', 'SNS/SQS', 'Node.js', 'Ruby on Rails'] },
   { category: 'Cloud & DevOps', skills: ['AWS Cloud Services', 'Docker', 'Terraform', 'CI/CD Pipelines', 'GitLab', 'Serverless'] },
-  { category: 'Tools',          skills: ['Agile / Scrum', 'Jira', 'Postman', 'Power BI', 'LangChain', 'LLMs'] },
+  { category: 'Tools', skills: ['Agile / Scrum', 'Jira', 'Postman', 'Power BI', 'LangChain', 'LLMs'] },
 ]
 
+// Certifications shown as their own row at the bottom of the section.
+// `abbr` is the AWS exam code; `name` is the full certification title.
 const certs = [
   { abbr: 'CLF-C02', name: 'AWS Certified Cloud Practitioner' },
   { abbr: 'AIF-C01', name: 'AWS Certified AI Practitioner' },
 ]
 
+/**
+ * Skills
+ * ------
+ * Section 02 — Technical Skills. Renders the `skillGroups` list as
+ * category rows plus a Certifications footer. Uses an intersection
+ * observer so the "reveal" animation only fires the first time the
+ * section scrolls into view.
+ */
 export default function Skills() {
+  // `ref` is attached to the section wrapper so the IntersectionObserver
+  // knows which element to watch.
   const ref = useRef<HTMLDivElement>(null)
+  // `visible` flips to true the first time the section enters the viewport
+  // and is used to add the `revealed` CSS class that triggers the fade-in.
   const [visible, setVisible] = useState(false)
 
+  // Set up an IntersectionObserver that fires once 5% of the section is
+  // visible, then disconnects on unmount. The observer intentionally does
+  // not flip `visible` back to false — the reveal animation should only
+  // play once per page load.
   useEffect(() => {
     const obs = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) setVisible(true) },
@@ -37,7 +57,7 @@ export default function Skills() {
           <div>
             <span className="font-mono text-xs tracking-[0.18em] uppercase text-sapphire-500">02 — Skills</span>
             <h2 className="font-serif text-shellstone-300 mt-3 leading-tight" style={{ fontSize: 'clamp(36px,5vw,64px)' }}>
-              Technical Arsenal
+              Technical Skills
             </h2>
           </div>
         </div>

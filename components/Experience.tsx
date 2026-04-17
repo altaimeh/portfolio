@@ -2,6 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+// Work-history data rendered as an accordion. Each entry contains display
+// copy (role, company, period), a list of resume-style bullet highlights,
+// the tech stack pills shown on the right, and a `type` used to color the
+// Full-time / Contract / Internship badge.
 const experiences = [
   {
     role: 'Full Stack Software Engineer',
@@ -46,11 +50,26 @@ const experiences = [
   },
 ]
 
+/**
+ * Experience
+ * ----------
+ * Section 03 — Work History. Renders each entry of `experiences` as a
+ * clickable header row; clicking expands that row to reveal its bullet
+ * highlights + tech stack. Only one row can be open at a time.
+ */
 export default function Experience() {
+  // Section wrapper ref — target element for the IntersectionObserver.
   const ref = useRef<HTMLDivElement>(null)
+  // Controls the one-shot "reveal" entrance animation for the section.
   const [visible, setVisible] = useState(false)
+  // Index of the currently expanded accordion row, or `null` if all are
+  // collapsed. Initialized to `0` so the first (most recent) job is
+  // already open when the page loads.
   const [open, setOpen]       = useState<number | null>(0)
 
+  // Same scroll-based reveal pattern as the other sections: watch the
+  // wrapper with an IntersectionObserver, flip `visible` to true once
+  // it enters view, then disconnect to stop observing.
   useEffect(() => {
     const obs = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) setVisible(true) },

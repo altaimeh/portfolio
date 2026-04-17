@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react'
 
+// In-page anchor links rendered on the right side of the nav bar.
+// Each `href` matches an `id` on one of the section components in page.tsx,
+// so the browser smooth-scrolls to that section when clicked.
 const navLinks = [
   { label: 'Work',       href: '#experience' },
   { label: 'Skills',     href: '#skills' },
@@ -9,9 +12,23 @@ const navLinks = [
   { label: 'Contact',    href: '#contact' },
 ]
 
+/**
+ * Nav
+ * ---
+ * Fixed top navigation bar shown on every section of the single-page site.
+ * Starts transparent over the hero and fades to a blurred dark background
+ * once the user scrolls past 60px, keeping the links legible over any
+ * section below.
+ */
 export default function Nav() {
+  // `scrolled` drives the background / blur toggle. Kept in state (rather
+  // than read directly) so React can re-render the nav when the threshold
+  // is crossed in either direction.
   const [scrolled, setScrolled] = useState(false)
 
+  // Attach a scroll listener on mount that flips `scrolled` whenever the
+  // user passes the 60px threshold. The cleanup function removes the
+  // listener on unmount so no stale handlers leak between page navigations.
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
     window.addEventListener('scroll', onScroll)

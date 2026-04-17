@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+// Featured project list. Each entry drives one project tile
+// (number badge, title, description, tech tag pills, GitHub link).
+// Add more objects here to render additional project cards.
 const projects = [
   {
     number: '01',
@@ -12,6 +15,15 @@ const projects = [
   },
 ]
 
+/**
+ * PomodoroPreview
+ * ---------------
+ * Static, purely-visual mock-up of the Pomodoro Timer app rendered on the
+ * left half of the project card. It's built from plain HTML + inline SVG
+ * (the progress ring) so the preview looks like a real app screenshot
+ * without needing an actual image asset. Nothing here is interactive —
+ * the buttons and tabs are decorative.
+ */
 function PomodoroPreview() {
   return (
     <div className="w-full h-full bg-[#1a1a2e] select-none">
@@ -53,10 +65,22 @@ function PomodoroPreview() {
   )
 }
 
+/**
+ * Projects
+ * --------
+ * Section 04 — Things I've Built. Maps over the `projects` array to render
+ * a two-column card per project: the `PomodoroPreview` on the left, and
+ * copy + tags + a GitHub link on the right.
+ */
 export default function Projects() {
+  // Section wrapper ref — target for the IntersectionObserver below.
   const ref = useRef<HTMLDivElement>(null)
+  // Toggled to true once the section first scrolls into view, which adds
+  // the `revealed` class and plays the staggered reveal animation.
   const [visible, setVisible] = useState(false)
 
+  // Same scroll-reveal pattern as the other sections: observe the wrapper,
+  // set `visible` on intersection, and disconnect on unmount.
   useEffect(() => {
     const obs = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) setVisible(true) },

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState, ChangeEvent, FormEvent } from 'react'
 
 /* ── Types ────────────────────────────────────────────────────────────── */
+// Shape of the form's controlled inputs. Keys must match the `name` attribute
+// on each <input>/<select>/<textarea> so the generic change handler works.
 type FormState = {
   name: string
   email: string
@@ -10,10 +12,19 @@ type FormState = {
   message: string
 }
 
+// Per-field error bag. Each field may be missing (no error) or carry an array
+// of string messages — matching the shape returned by Zod's `fieldErrors`.
 type FieldErrors = Partial<Record<keyof FormState, string[]>>
 
+// Lifecycle state of the form:
+//   idle     → user is filling it out
+//   loading  → submit is in-flight
+//   success  → server confirmed the email was queued
+//   error    → submit failed for reasons other than field validation
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
+// Options shown in the Subject <select>. Kept in sync with the enum in
+// app/api/contact/route.ts so server-side validation accepts them.
 const SUBJECTS = [
   'Full-time Role',
   'Contract / Freelance',
@@ -21,18 +32,42 @@ const SUBJECTS = [
   'General Inquiry',
 ]
 
+// Social links rendered in the left column of the contact section.
+// `icon` is a short 2-letter glyph shown in the square avatar on the left.
 const links = [
   { label: 'LinkedIn', value: 'linkedin.com/in/altaimee', href: 'https://linkedin.com/in/altaimee', icon: 'in' },
   { label: 'GitHub',   value: 'github.com/altaimeh',     href: 'https://github.com/altaimeh',      icon: 'gh' },
 ]
 
+// Blank form used as the initial value and to reset the form after success.
 const INITIAL: FormState = { name: '', email: '', subject: '', message: '' }
 
 /* ── Component ────────────────────────────────────────────────────────── */
+/**
+ * Contact
+ * -------
+ * Section 05 — Contact. Left column shows an availability badge, a short
+ * blurb and social links; right column shows a controlled contact form.
+ *
+ * The form validates inline on blur, then POSTs to /api/contact which
+ * forwards the message to the site owner via Resend. Success swaps the
+ * form out for a confirmation panel; errors are shown inline per field
+ * (for 422s) or as a banner above the submit button (for 5xx / network).
+ */
 export default function Contact() {
+  // Wrapper ref used by the IntersectionObserver to trigger the reveal
+  // animation the first time the section scrolls into view.
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
 
+  // `form` holds the live values of the four inputs.
+  // `errors` is the current per-field validation error bag.
+  // `touched` tracks which fields the user has blurred at least once, so
+  //   we don't show "required" errors on untouched fields while they're
+  //   still filling the form out.
+  // `status` drives the submit button / success state / error banner.
+  // `serverMsg` holds a human-readable message returned by the API for
+  //   non-validation failures (500s, network problems).
   const [form, setForm]         = useState<FormState>(INITIAL)
   const [errors, setErrors]     = useState<FieldErrors>({})
   const [touched, setTouched]   = useState<Partial<Record<keyof FormState, boolean>>>({})
@@ -40,6 +75,8 @@ export default function Contact() {
   const [serverMsg, setServerMsg] = useState('')
 
   /* Intersection observer */
+  // Standard one-shot scroll reveal — flips `visible` the first time the
+  // section enters view and then disconnects the observer.
   useEffect(() => {
     const obs = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) setVisible(true) },
@@ -50,6 +87,12 @@ export default function Contact() {
   }, [])
 
   /* ── Client-side validation (mirrors server schema) ─────────────────── */
+  /**
+   * Pure function that inspects the current form values and returns a
+   * per-field error map. Mirrors the Zod schema on the server so the user
+   * gets instant feedback without a round-trip, but the server still
+   * re-validates on receipt as the source of truth.
+   */
   function validate(data: FormState): FieldErrors {
     const errs: FieldErrors = {}
     if (!data.name || data.name.trim().length < 2)
@@ -63,6 +106,12 @@ export default function Contact() {
     return errs
   }
 
+  /**
+   * Generic onChange handler shared by all form inputs. Keeps the form
+   * object in sync with the user's keystrokes, and — if the field has
+   * already been blurred once — re-runs validation so the error message
+   * for that field updates live as they type.
+   */
   function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     const { name, value } = e.target
     const updated = { ...form, [name]: value }
@@ -72,12 +121,32 @@ export default function Contact() {
     }
   }
 
+  /**
+   * onBlur handler for every input. Marks the field as "touched" (so its
+   * errors may now render) and validates the whole form so the blurred
+   * field's error message appears the moment focus leaves it.
+   */
   function handleBlur(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     const { name } = e.target
     setTouched(t => ({ ...t, [name]: true }))
     setErrors(validate(form))
   }
 
+  /**
+   * Form submission handler.
+   *
+   * Steps:
+   *   1. Prevent the default full-page POST.
+   *   2. Force every field to "touched" and validate — if anything is
+   *      invalid, bail out (the inline errors are now visible).
+   *   3. Flip status to `loading` and POST the payload to /api/contact.
+   *   4. Branch on the server response:
+   *        success        → clear form, show confirmation panel
+   *        422 validation → adopt the server's per-field messages
+   *        anything else  → surface a generic error banner
+   *   5. If the fetch itself throws (offline, DNS, etc.), show a network
+   *      error message.
+   */
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     // Mark all fields touched and validate
@@ -116,6 +185,12 @@ export default function Contact() {
   }
 
   /* ── Helpers ─────────────────────────────────────────────────────────── */
+  /**
+   * Builds the Tailwind class string for a form input. Starts from a shared
+   * base style and then appends either the "error" border/ring colors or
+   * the normal focus colors, depending on whether that field currently has
+   * a visible validation error.
+   */
   const fieldClass = (name: keyof FormState) => {
     const base = 'w-full bg-royal-900/60 border rounded-xl px-4 py-3.5 text-sm text-shellstone-300 placeholder-shellstone-700 focus:outline-none transition-all duration-300 focus:bg-royal-900'
     const hasErr = touched[name] && errors[name]
@@ -124,11 +199,18 @@ export default function Contact() {
       : 'border-sapphire-800/60 focus:border-quicksand-400/60 focus:ring-1 focus:ring-quicksand-400/20'}`
   }
 
+  /**
+   * Renders the inline red error message under a field, but only if the
+   * field has been touched AND has at least one validation error. Returns
+   * `null` otherwise so the DOM stays clean.
+   */
   const errMsg = (name: keyof FormState) =>
     touched[name] && errors[name]
       ? <p className="mt-1.5 text-xs text-red-400/80">{errors[name]![0]}</p>
       : null
 
+  // Live character count shown next to the Message label. Turns red once
+  // the user is within 200 characters of the 2000-char server-side cap.
   const charCount = form.message.length
 
   /* ── Render ──────────────────────────────────────────────────────────── */

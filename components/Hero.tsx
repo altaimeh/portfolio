@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 
+// Rotating list of role titles cycled through by the typewriter effect
+// below the hero headline.
 const ROLES = [
   'Full Stack Engineer',
   'React Specialist',
@@ -9,17 +11,43 @@ const ROLES = [
   'AWS Cloud Practitioner',
 ]
 
+/**
+ * Hero
+ * ----
+ * The landing section (section 01 — About). Shows the name, an availability
+ * badge, and a typewriter animation that cycles through job titles.
+ *
+ * State:
+ *   roleIndex  → which entry of ROLES is currently being typed/erased
+ *   displayed  → the substring of that role currently shown on screen
+ *   deleting   → `true` while the effect is erasing characters,
+ *                `false` while it's adding them
+ *   visible    → gate that drives the initial fade/slide-in animations
+ */
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0)
   const [displayed, setDisplayed] = useState('')
-  const [deleting, setDeleting]   = useState(false)
-  const [visible, setVisible]     = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [visible, setVisible] = useState(false)
 
+  // Mount-time reveal: after a tiny 80ms delay we flip `visible` to true,
+  // which unlocks the staggered CSS opacity/translate transitions on the
+  // name, rule, and bottom row (see inline styles below).
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 80)
     return () => clearTimeout(t)
   }, [])
 
+  // Typewriter state machine. It re-runs whenever `displayed`, `deleting`,
+  // or `roleIndex` changes, scheduling exactly one timeout per tick:
+  //
+  //   typing     → add one more character every 58ms until the full role is shown
+  //   pause      → once fully typed, wait 2600ms before starting to erase
+  //   deleting   → remove one character every 32ms until the string is empty
+  //   advance    → empty + deleting → flip to typing the next role
+  //
+  // Each branch returns `clearTimeout(timeout)` via cleanup so we never
+  // stack multiple concurrent timers when state changes rapidly.
   useEffect(() => {
     const target = ROLES[roleIndex]
     let timeout: ReturnType<typeof setTimeout>
@@ -113,9 +141,7 @@ export default function Hero() {
 
           {/* Description + CTAs */}
           <div className="flex flex-col sm:flex-row sm:items-end gap-8 sm:gap-16">
-            <p className="text-sm text-shellstone-600 leading-relaxed max-w-xs">
-              3+ years building enterprise-scale distributed systems and production-grade React applications.
-            </p>
+
             <div className="flex items-center gap-8 flex-shrink-0">
               <a
                 href="#experience"
