@@ -7,7 +7,7 @@ import './globals.css'
  * and social-media link previews.
  */
 export const metadata: Metadata = {
-  title: 'Al-Taimee Hassan — Full Stack Engineer',
+  title: 'Al-Taimee Hassan',
   description: 'Full Stack Engineer building reliable, modern web applications for enterprise teams.',
 }
 
