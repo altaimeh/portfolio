@@ -12,7 +12,7 @@ const ContactSchema = z.object({
   subject: z.enum(['Full-time Role', 'Contract / Freelance', 'Collaboration', 'General Inquiry'], {
     error: () => 'Please select a subject.',
   }),
-  message: z.string().min(20, 'Message must be at least 20 characters.').max(2000),
+  message: z.string().min(1, 'Please enter a message.').max(2000),
 })
 
 /* ── POST /api/contact ─────────────────────────────────────────────────── */

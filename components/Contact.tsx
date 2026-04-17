@@ -101,8 +101,8 @@ export default function Contact() {
       errs.email = ['Please enter a valid email address.']
     if (!data.subject)
       errs.subject = ['Please select a subject.']
-    if (!data.message || data.message.trim().length < 20)
-      errs.message = ['Message must be at least 20 characters.']
+    if (!data.message || data.message.trim().length < 1)
+      errs.message = ['Please enter a message.']
     return errs
   }
 
@@ -376,7 +376,7 @@ export default function Contact() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     rows={6}
-                    placeholder="Tell me about your project, role, or idea…"
+                    placeholder="Tell me about your project, role, or opportunity. I look forward to hearing from you!"
                     className={`${fieldClass('message')} resize-none`}
                     disabled={status === 'loading'}
                   />
