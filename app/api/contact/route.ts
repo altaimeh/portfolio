@@ -91,7 +91,7 @@ export async function POST(req: Request) {
       from: 'Portfolio Contact <onboarding@resend.dev>',
       to: [recipientEmail],
       replyTo: email,
-      subject: `[Portfolio] ${subject} — from ${name}`,
+      subject: `${subject} opportunity — from ${name}`,
       html: `
         <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1a1a2e">
           <h2 style="border-bottom:2px solid #E0C58F;padding-bottom:8px;color:#112250">

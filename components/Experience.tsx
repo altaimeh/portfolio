@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 // Work-history data rendered as an accordion. Each entry contains display
 // copy (role, company, period), a list of resume-style bullet highlights,
 // the tech stack pills shown on the right, and a `type` used to color the
-// Full-time / Contract / Internship badge.
+// Full-time / Part-time badge.
 const experiences = [
   {
     role: 'Full Stack Software Engineer',
@@ -26,8 +26,8 @@ const experiences = [
     role: 'IT Specialist',
     company: 'Detroit Lions',
     location: 'Detroit, MI',
-    period: '2024',
-    type: 'Contract',
+    period: '2021 - current',
+    type: 'Part-time',
     highlights: [
       'Served as technical point of contact for ticket authentication systems during live events.',
       'Used SQL to investigate ticketing discrepancies and validate system data.',
@@ -39,8 +39,8 @@ const experiences = [
     role: 'IT Analyst',
     company: 'Blue Cross Blue Shield',
     location: 'Detroit, MI',
-    period: '2024',
-    type: 'Internship',
+    period: '2022 - 2023',
+    type: 'Full-time',
     highlights: [
       'Built and deployed enterprise SharePoint solutions to enhance internal IT operations.',
       'Managed and triaged helpdesk tickets maintaining SLA targets.',
@@ -65,7 +65,7 @@ export default function Experience() {
   // Index of the currently expanded accordion row, or `null` if all are
   // collapsed. Initialized to `0` so the first (most recent) job is
   // already open when the page loads.
-  const [open, setOpen]       = useState<number | null>(0)
+  const [open, setOpen] = useState<number | null>(0)
 
   // Same scroll-based reveal pattern as the other sections: watch the
   // wrapper with an IntersectionObserver, flip `visible` to true once
@@ -136,11 +136,10 @@ export default function Experience() {
                     ))}
                   </div>
                   <div className="mt-4">
-                    <span className={`inline-block text-xs font-medium tracking-[0.12em] uppercase px-3 py-1 rounded-full border ${
-                      exp.type === 'Full-time'  ? 'border-quicksand-400/30 text-quicksand-400' :
-                      exp.type === 'Contract'   ? 'border-shellstone-400/30 text-shellstone-400' :
-                                                  'border-sapphire-400/30 text-sapphire-400'
-                    }`}>{exp.type}</span>
+                    <span className={`inline-block text-xs font-medium tracking-[0.12em] uppercase px-3 py-1 rounded-full border ${exp.type === 'Full-time' ? 'border-quicksand-400/30 text-quicksand-400' :
+                      exp.type === 'Contract' ? 'border-shellstone-400/30 text-shellstone-400' :
+                        'border-sapphire-400/30 text-sapphire-400'
+                      }`}>{exp.type}</span>
                   </div>
                 </div>
               </div>
@@ -158,11 +157,7 @@ export default function Experience() {
               </h3>
               <p className="text-shellstone-500 text-sm mt-2">Wayne State University — Detroit, MI</p>
             </div>
-            <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-shellstone-600 tracking-wide sm:text-right">
-              <span>Hackathon Team Lead</span>
-              <span>Capstone Team Lead</span>
-              <span>BSA President</span>
-            </div>
+
           </div>
         </div>
 

@@ -36,7 +36,7 @@ const SUBJECTS = [
 // `icon` is a short 2-letter glyph shown in the square avatar on the left.
 const links = [
   { label: 'LinkedIn', value: 'linkedin.com/in/altaimee', href: 'https://linkedin.com/in/altaimee', icon: 'in' },
-  { label: 'GitHub',   value: 'github.com/altaimeh',     href: 'https://github.com/altaimeh',      icon: 'gh' },
+  { label: 'GitHub', value: 'github.com/altaimeh', href: 'https://github.com/altaimeh', icon: 'gh' },
 ]
 
 // Blank form used as the initial value and to reset the form after success.
@@ -68,10 +68,10 @@ export default function Contact() {
   // `status` drives the submit button / success state / error banner.
   // `serverMsg` holds a human-readable message returned by the API for
   //   non-validation failures (500s, network problems).
-  const [form, setForm]         = useState<FormState>(INITIAL)
-  const [errors, setErrors]     = useState<FieldErrors>({})
-  const [touched, setTouched]   = useState<Partial<Record<keyof FormState, boolean>>>({})
-  const [status, setStatus]     = useState<Status>('idle')
+  const [form, setForm] = useState<FormState>(INITIAL)
+  const [errors, setErrors] = useState<FieldErrors>({})
+  const [touched, setTouched] = useState<Partial<Record<keyof FormState, boolean>>>({})
+  const [status, setStatus] = useState<Status>('idle')
   const [serverMsg, setServerMsg] = useState('')
 
   /* Intersection observer */
@@ -244,7 +244,7 @@ export default function Contact() {
             </div>
 
             <p className="text-sm text-shellstone-600 leading-relaxed">
-              I&apos;m currently open to full-time roles and select freelance projects. Whether you have a position, a product idea, or just want to connect — drop a message and I&apos;ll get back to you within 24 hours.
+              I&apos;m currently open to full-time roles and I am open to relocation. Whether you have a position, a product idea, or just want to connect — drop a message and I&apos;ll get back to you within 24 hours.
             </p>
 
             {/* Social links */}
@@ -307,7 +307,7 @@ export default function Contact() {
                       value={form.name}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      placeholder="Al-Taimee Hassan"
+                      placeholder="Please enter your name"
                       className={fieldClass('name')}
                       disabled={status === 'loading'}
                     />
@@ -323,7 +323,7 @@ export default function Contact() {
                       value={form.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      placeholder="hello@example.com"
+                      placeholder="Please enter your email address"
                       className={fieldClass('email')}
                       disabled={status === 'loading'}
                     />
@@ -367,7 +367,7 @@ export default function Contact() {
                       Message
                     </label>
                     <span className={`text-xs transition-colors duration-300 ${charCount > 1800 ? 'text-red-400/80' : 'text-shellstone-700'}`}>
-                      {charCount} / 2000
+                      {charCount}
                     </span>
                   </div>
                   <textarea
