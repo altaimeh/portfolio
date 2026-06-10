@@ -28,9 +28,9 @@ const projects = [
   },
   {
     number: '03',
-    title: 'Basketball Roster Simulator',
-    description: 'A full team roster management and game simulation engine — build lineups, set rotations, and run head-to-head matchup simulations with stat-driven outcome modeling.',
-    tags: ['Java', 'Spring Boot', 'React', 'TypeScript'],
+    title: 'Can You Go 82-0?',
+    description: 'A fantasy NBA draft game — spin for a random team & era, pick one player per round, build a 5-man starting lineup with position rules, then simulate an 82-game season with stat-driven outcome modeling.',
+    tags: ['React', 'TypeScript', 'Vite', 'React Router'],
     github: 'https://github.com/your-basketball-link-here',
     preview: 'basketball',
     featured: false,
@@ -201,107 +201,131 @@ function PomodoroPreview() {
   )
 }
 
-// ─── Basketball Roster Simulator preview ─────────────────────────────────────
+// ─── Basketball 82 preview ("Can You Go 82-0?") ──────────────────────────────
 function BasketballPreview() {
+  // Real players from the actual database — real teams, real eras
   const roster = [
-    { num: '3',  name: 'M. Johnson',   pos: 'PG', ppg: 24.1, rpg: 5.2, apg: 9.8, rating: 92 },
-    { num: '23', name: 'L. Davis',     pos: 'SF', ppg: 28.4, rpg: 7.5, apg: 4.1, rating: 96 },
-    { num: '11', name: 'K. Thompson',  pos: 'SG', ppg: 18.7, rpg: 3.4, apg: 2.9, rating: 85 },
-    { num: '34', name: 'C. Wallace',   pos: 'PF', ppg: 14.2, rpg: 9.1, apg: 2.3, rating: 81 },
-    { num: '5',  name: 'T. Rivers',    pos: 'C',  ppg: 11.8, rpg: 11.4, apg: 1.7, rating: 79 },
+    { name: 'Magic Johnson',  team: 'Lakers',   era: '1980s', pos: 'PG', ovr: 99 },
+    { name: 'Kobe Bryant',    team: 'Lakers',   era: '2000s', pos: 'SG', ovr: 97 },
+    { name: 'LeBron James',   team: 'Cavaliers',era: '2010s', pos: 'SF', ovr: 99 },
+    { name: 'Charles Barkley',team: 'Suns',     era: '1990s', pos: 'PF', ovr: 96 },
+    { name: 'Shaquille O\'Neal',team:'Lakers',  era: '2000s', pos: 'C',  ovr: 99 },
+  ]
+
+  const posColors: Record<string, string> = {
+    PG: '#60a5fa', SG: '#a78bfa', SF: '#34d399', PF: '#fb923c', C: '#f87171',
+  }
+
+  // Court slot positions (normalized 0–100 coords, mirroring the real app layout)
+  const courtSlots = [
+    { pos: 'PG', x: 50, y: 80 },  // top center (ball handler)
+    { pos: 'SG', x: 20, y: 60 },  // left wing
+    { pos: 'SF', x: 80, y: 60 },  // right wing
+    { pos: 'PF', x: 28, y: 36 },  // left block
+    { pos: 'C',  x: 72, y: 36 },  // right block / paint
   ]
 
   return (
-    <div className="w-full h-full flex flex-col select-none" style={{ background: '#090e0a', fontFamily: "'JetBrains Mono', monospace" }}>
+    <div className="w-full h-full flex flex-col select-none" style={{ background: '#0d1117', fontFamily: 'Inter, sans-serif' }}>
 
-      {/* Browser chrome */}
-      <div style={{ background: '#060b07', borderBottom: '1px solid rgba(255,255,255,0.04)', padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-        <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(248,113,113,0.55)', display: 'inline-block' }} />
-        <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(250,204,21,0.55)', display: 'inline-block' }} />
-        <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(74,222,128,0.55)', display: 'inline-block' }} />
-        <div style={{ marginLeft: 10, height: 13, borderRadius: 4, background: 'rgba(255,255,255,0.04)', width: 155 }} />
-        <div style={{ marginLeft: 'auto', display: 'flex', gap: 14 }}>
-          {['Roster', 'Simulate', 'Stats'].map((t, i) => (
-            <span key={t} style={{ fontSize: 9, color: i === 0 ? '#E0C58F' : 'rgba(255,255,255,0.25)', letterSpacing: '0.1em', textTransform: 'uppercase', borderBottom: i === 0 ? '1px solid #E0C58F' : 'none', paddingBottom: 2 }}>{t}</span>
+      {/* ── App header ── */}
+      <div style={{ background: '#090e13', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '9px 14px', display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+        <span style={{ fontSize: 15 }}>🏀</span>
+        <div>
+          <div style={{ fontSize: 10, fontWeight: 700, color: 'white', letterSpacing: '-0.01em', lineHeight: 1 }}>Can You Go 82-0?</div>
+          <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.3)', marginTop: 1 }}>Build your ultimate roster</div>
+        </div>
+        <div style={{ marginLeft: 'auto', display: 'flex', gap: 12 }}>
+          {['Game', 'How to Play', 'About'].map((t, i) => (
+            <span key={t} style={{ fontSize: 9, color: i === 0 ? '#f97316' : 'rgba(255,255,255,0.25)', fontWeight: i === 0 ? 600 : 400, borderBottom: i === 0 ? '1px solid #f97316' : 'none', paddingBottom: 1 }}>{t}</span>
           ))}
         </div>
       </div>
 
-      <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column', padding: '14px 16px', gap: 10 }}>
+      <div style={{ flex: 1, overflow: 'hidden', display: 'flex', gap: 0 }}>
 
-        {/* Team header */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-          <div>
-            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: 3 }}>Active Roster</div>
-            <div style={{ fontSize: 20, fontWeight: 700, color: 'white', lineHeight: 1, letterSpacing: '-0.01em' }}>Detroit Vipers</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
-              <span style={{ fontSize: 10, color: '#4ade80', fontWeight: 600 }}>34W</span>
-              <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.2)' }}>—</span>
-              <span style={{ fontSize: 10, color: '#f87171', fontWeight: 600 }}>14L</span>
-              <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.25)', marginLeft: 4 }}>Eastern Conf.</span>
-            </div>
+        {/* ── Left: Court with players ── */}
+        <div style={{ flex: '0 0 55%', position: 'relative', padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.14em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span>Your Roster</span>
+            <span style={{ color: '#f97316', background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.25)', borderRadius: 99, padding: '1px 7px', fontSize: 8 }}>🏆 Roster Complete</span>
           </div>
-          {/* Court mini-graphic */}
-          <svg width="54" height="38" viewBox="0 0 54 38" style={{ opacity: 0.35 }}>
-            <rect x="1" y="1" width="52" height="36" rx="3" fill="none" stroke="rgba(224,197,143,0.6)" strokeWidth="1"/>
-            <circle cx="27" cy="19" r="8" fill="none" stroke="rgba(224,197,143,0.6)" strokeWidth="1"/>
-            <line x1="27" y1="1" x2="27" y2="37" stroke="rgba(224,197,143,0.4)" strokeWidth="0.5"/>
-            <rect x="1" y="10" width="14" height="18" fill="none" stroke="rgba(224,197,143,0.5)" strokeWidth="0.8"/>
-            <rect x="39" y="10" width="14" height="18" fill="none" stroke="rgba(224,197,143,0.5)" strokeWidth="0.8"/>
-            <circle cx="8" cy="19" r="4" fill="none" stroke="rgba(224,197,143,0.5)" strokeWidth="0.8"/>
-            <circle cx="46" cy="19" r="4" fill="none" stroke="rgba(224,197,143,0.5)" strokeWidth="0.8"/>
-          </svg>
+
+          {/* Court SVG */}
+          <div style={{ position: 'relative', flex: 1 }}>
+            <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%', display: 'block' }}>
+              {/* Court floor */}
+              <rect x="2" y="2" width="96" height="96" rx="4" fill="#1a2235" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5"/>
+              {/* Half-court line */}
+              <line x1="2" y1="50" x2="98" y2="50" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5"/>
+              {/* Center circle */}
+              <circle cx="50" cy="50" r="12" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="0.5"/>
+              {/* Paint (key) */}
+              <rect x="36" y="2" width="28" height="22" rx="1" fill="rgba(249,115,22,0.04)" stroke="rgba(249,115,22,0.12)" strokeWidth="0.5"/>
+              {/* Rim */}
+              <circle cx="50" cy="9" r="3" fill="none" stroke="rgba(249,115,22,0.3)" strokeWidth="0.8"/>
+              {/* Three-point arc */}
+              <path d="M 18,2 Q 2,30 18,50" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5"/>
+              <path d="M 82,2 Q 98,30 82,50" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5"/>
+
+              {/* Player slots */}
+              {courtSlots.map((slot, i) => {
+                const p = roster[i]
+                const color = posColors[slot.pos]
+                return (
+                  <g key={slot.pos}>
+                    {/* Glow */}
+                    <circle cx={slot.x} cy={slot.y} r="7.5" fill={color} opacity="0.08"/>
+                    {/* Avatar circle */}
+                    <circle cx={slot.x} cy={slot.y} r="6" fill="#1e2a3a" stroke={color} strokeWidth="1.2"/>
+                    {/* Position label */}
+                    <text x={slot.x} y={slot.y + 1} textAnchor="middle" dominantBaseline="middle" fontSize="4.5" fontWeight="700" fill={color} fontFamily="Inter, sans-serif">{slot.pos}</text>
+                    {/* Player name below */}
+                    <text x={slot.x} y={slot.y + 11} textAnchor="middle" fontSize="3.8" fill="rgba(255,255,255,0.55)" fontFamily="Inter, sans-serif">
+                      {p.name.split(' ').slice(-1)[0]}
+                    </text>
+                    {/* Overall rating */}
+                    <text x={slot.x + 7.5} y={slot.y - 4.5} textAnchor="middle" fontSize="3.5" fontWeight="700" fill={color} fontFamily="Inter, sans-serif">{p.ovr}</text>
+                  </g>
+                )
+              })}
+            </svg>
+          </div>
         </div>
 
-        <div style={{ height: 1, background: 'rgba(255,255,255,0.05)' }} />
+        {/* ── Right: Spin result + season outcome ── */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '10px 10px 10px 0', gap: 8 }}>
 
-        {/* Column headers */}
-        <div style={{ display: 'flex', alignItems: 'center', padding: '0 8px' }}>
-          <div style={{ width: 22, fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>#</div>
-          <div style={{ flex: 1, fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>PLAYER</div>
-          <div style={{ width: 28, textAlign: 'center', fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>POS</div>
-          <div style={{ width: 36, textAlign: 'right', fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>PPG</div>
-          <div style={{ width: 36, textAlign: 'right', fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>RPG</div>
-          <div style={{ width: 36, textAlign: 'right', fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>APG</div>
-          <div style={{ width: 44, textAlign: 'right', fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>RTG</div>
-        </div>
-
-        {/* Player rows */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          {roster.map((p, i) => (
-            <div key={p.num} style={{ display: 'flex', alignItems: 'center', padding: '5px 8px', borderRadius: 7, background: i === 1 ? 'rgba(224,197,143,0.04)' : 'rgba(255,255,255,0.015)', border: i === 1 ? '1px solid rgba(224,197,143,0.08)' : '1px solid transparent' }}>
-              <div style={{ width: 22, fontSize: 10, color: 'rgba(255,255,255,0.3)', fontWeight: 600 }}>{p.num}</div>
-              <div style={{ flex: 1, fontSize: 10, color: i === 1 ? '#E0C58F' : 'rgba(255,255,255,0.75)', fontWeight: i === 1 ? 700 : 400 }}>{p.name}</div>
-              <div style={{ width: 28, textAlign: 'center' }}>
-                <span style={{ fontSize: 8, padding: '1px 5px', borderRadius: 4, background: 'rgba(60,80,112,0.3)', color: 'rgba(154,180,204,0.8)' }}>{p.pos}</span>
+          {/* Last spin card */}
+          <div style={{ background: '#161d2a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 10, padding: '10px 12px' }}>
+            <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 6 }}>Last Spin</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+              <span style={{ fontSize: 14 }}>🎲</span>
+              <div>
+                <div style={{ fontSize: 10, fontWeight: 700, color: 'white', lineHeight: 1 }}>LA Lakers</div>
+                <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>2000s Era</div>
               </div>
-              <div style={{ width: 36, textAlign: 'right', fontSize: 10, color: 'rgba(255,255,255,0.6)' }}>{p.ppg}</div>
-              <div style={{ width: 36, textAlign: 'right', fontSize: 10, color: 'rgba(255,255,255,0.6)' }}>{p.rpg}</div>
-              <div style={{ width: 36, textAlign: 'right', fontSize: 10, color: 'rgba(255,255,255,0.6)' }}>{p.apg}</div>
-              <div style={{ width: 44, textAlign: 'right' }}>
-                <span style={{ fontSize: 10, fontWeight: 700, color: p.rating >= 90 ? '#4ade80' : p.rating >= 83 ? '#E0C58F' : 'rgba(255,255,255,0.45)' }}>{p.rating}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', marginTop: 'auto' }} />
-
-        {/* Last sim result */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div>
-            <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 3 }}>Last Simulation</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#4ade80' }}>W 112</span>
-              <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.2)' }}>vs</span>
-              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>98 Lakers</span>
             </div>
           </div>
-          <div style={{ padding: '6px 14px', borderRadius: 8, background: 'rgba(224,197,143,0.08)', border: '1px solid rgba(224,197,143,0.2)', fontSize: 9, color: '#E0C58F', letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'default' }}>
-            Run Sim ▶
-          </div>
-        </div>
 
+          {/* Season result */}
+          <div style={{ background: 'linear-gradient(135deg, #1a1a0a 0%, #0d1a0d 100%)', border: '1px solid rgba(250,204,21,0.15)', borderRadius: 10, padding: '10px 12px', flex: 1 }}>
+            <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 6 }}>Season Result</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+              <span style={{ fontSize: 22, fontWeight: 900, color: '#facc15', lineHeight: 1, letterSpacing: '-0.02em' }}>79</span>
+              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.2)', fontWeight: 300 }}>—</span>
+              <span style={{ fontSize: 22, fontWeight: 700, color: 'rgba(255,255,255,0.35)', lineHeight: 1, letterSpacing: '-0.02em' }}>3</span>
+            </div>
+            <div style={{ fontSize: 9, color: '#facc15', fontWeight: 600, marginBottom: 8 }}>🔥 All-Time Dynasty!</div>
+            <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.25)' }}>Team Strength: <span style={{ color: 'rgba(255,255,255,0.5)' }}>1,847</span></div>
+          </div>
+
+          {/* Simulate button */}
+          <button style={{ width: '100%', padding: '8px', background: 'linear-gradient(135deg, #f97316, #ea580c)', border: 'none', borderRadius: 8, fontSize: 10, fontWeight: 700, color: 'white', cursor: 'default', letterSpacing: '0.04em' }}>
+            🏀 Simulate Season
+          </button>
+
+        </div>
       </div>
     </div>
   )
