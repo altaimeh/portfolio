@@ -26,6 +26,15 @@ const projects = [
     preview: 'pomodoro',
     featured: false,
   },
+  {
+    number: '03',
+    title: 'Basketball Roster Simulator',
+    description: 'A full team roster management and game simulation engine — build lineups, set rotations, and run head-to-head matchup simulations with stat-driven outcome modeling.',
+    tags: ['Java', 'Spring Boot', 'React', 'TypeScript'],
+    github: 'https://github.com/your-basketball-link-here',
+    preview: 'basketball',
+    featured: false,
+  },
 ]
 
 // ─── Stock Tracker preview ───────────────────────────────────────────────────
@@ -192,10 +201,117 @@ function PomodoroPreview() {
   )
 }
 
+// ─── Basketball Roster Simulator preview ─────────────────────────────────────
+function BasketballPreview() {
+  const roster = [
+    { num: '3',  name: 'M. Johnson',   pos: 'PG', ppg: 24.1, rpg: 5.2, apg: 9.8, rating: 92 },
+    { num: '23', name: 'L. Davis',     pos: 'SF', ppg: 28.4, rpg: 7.5, apg: 4.1, rating: 96 },
+    { num: '11', name: 'K. Thompson',  pos: 'SG', ppg: 18.7, rpg: 3.4, apg: 2.9, rating: 85 },
+    { num: '34', name: 'C. Wallace',   pos: 'PF', ppg: 14.2, rpg: 9.1, apg: 2.3, rating: 81 },
+    { num: '5',  name: 'T. Rivers',    pos: 'C',  ppg: 11.8, rpg: 11.4, apg: 1.7, rating: 79 },
+  ]
+
+  return (
+    <div className="w-full h-full flex flex-col select-none" style={{ background: '#090e0a', fontFamily: "'JetBrains Mono', monospace" }}>
+
+      {/* Browser chrome */}
+      <div style={{ background: '#060b07', borderBottom: '1px solid rgba(255,255,255,0.04)', padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+        <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(248,113,113,0.55)', display: 'inline-block' }} />
+        <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(250,204,21,0.55)', display: 'inline-block' }} />
+        <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(74,222,128,0.55)', display: 'inline-block' }} />
+        <div style={{ marginLeft: 10, height: 13, borderRadius: 4, background: 'rgba(255,255,255,0.04)', width: 155 }} />
+        <div style={{ marginLeft: 'auto', display: 'flex', gap: 14 }}>
+          {['Roster', 'Simulate', 'Stats'].map((t, i) => (
+            <span key={t} style={{ fontSize: 9, color: i === 0 ? '#E0C58F' : 'rgba(255,255,255,0.25)', letterSpacing: '0.1em', textTransform: 'uppercase', borderBottom: i === 0 ? '1px solid #E0C58F' : 'none', paddingBottom: 2 }}>{t}</span>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column', padding: '14px 16px', gap: 10 }}>
+
+        {/* Team header */}
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: 3 }}>Active Roster</div>
+            <div style={{ fontSize: 20, fontWeight: 700, color: 'white', lineHeight: 1, letterSpacing: '-0.01em' }}>Detroit Vipers</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
+              <span style={{ fontSize: 10, color: '#4ade80', fontWeight: 600 }}>34W</span>
+              <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.2)' }}>—</span>
+              <span style={{ fontSize: 10, color: '#f87171', fontWeight: 600 }}>14L</span>
+              <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.25)', marginLeft: 4 }}>Eastern Conf.</span>
+            </div>
+          </div>
+          {/* Court mini-graphic */}
+          <svg width="54" height="38" viewBox="0 0 54 38" style={{ opacity: 0.35 }}>
+            <rect x="1" y="1" width="52" height="36" rx="3" fill="none" stroke="rgba(224,197,143,0.6)" strokeWidth="1"/>
+            <circle cx="27" cy="19" r="8" fill="none" stroke="rgba(224,197,143,0.6)" strokeWidth="1"/>
+            <line x1="27" y1="1" x2="27" y2="37" stroke="rgba(224,197,143,0.4)" strokeWidth="0.5"/>
+            <rect x="1" y="10" width="14" height="18" fill="none" stroke="rgba(224,197,143,0.5)" strokeWidth="0.8"/>
+            <rect x="39" y="10" width="14" height="18" fill="none" stroke="rgba(224,197,143,0.5)" strokeWidth="0.8"/>
+            <circle cx="8" cy="19" r="4" fill="none" stroke="rgba(224,197,143,0.5)" strokeWidth="0.8"/>
+            <circle cx="46" cy="19" r="4" fill="none" stroke="rgba(224,197,143,0.5)" strokeWidth="0.8"/>
+          </svg>
+        </div>
+
+        <div style={{ height: 1, background: 'rgba(255,255,255,0.05)' }} />
+
+        {/* Column headers */}
+        <div style={{ display: 'flex', alignItems: 'center', padding: '0 8px' }}>
+          <div style={{ width: 22, fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>#</div>
+          <div style={{ flex: 1, fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>PLAYER</div>
+          <div style={{ width: 28, textAlign: 'center', fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>POS</div>
+          <div style={{ width: 36, textAlign: 'right', fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>PPG</div>
+          <div style={{ width: 36, textAlign: 'right', fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>RPG</div>
+          <div style={{ width: 36, textAlign: 'right', fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>APG</div>
+          <div style={{ width: 44, textAlign: 'right', fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>RTG</div>
+        </div>
+
+        {/* Player rows */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          {roster.map((p, i) => (
+            <div key={p.num} style={{ display: 'flex', alignItems: 'center', padding: '5px 8px', borderRadius: 7, background: i === 1 ? 'rgba(224,197,143,0.04)' : 'rgba(255,255,255,0.015)', border: i === 1 ? '1px solid rgba(224,197,143,0.08)' : '1px solid transparent' }}>
+              <div style={{ width: 22, fontSize: 10, color: 'rgba(255,255,255,0.3)', fontWeight: 600 }}>{p.num}</div>
+              <div style={{ flex: 1, fontSize: 10, color: i === 1 ? '#E0C58F' : 'rgba(255,255,255,0.75)', fontWeight: i === 1 ? 700 : 400 }}>{p.name}</div>
+              <div style={{ width: 28, textAlign: 'center' }}>
+                <span style={{ fontSize: 8, padding: '1px 5px', borderRadius: 4, background: 'rgba(60,80,112,0.3)', color: 'rgba(154,180,204,0.8)' }}>{p.pos}</span>
+              </div>
+              <div style={{ width: 36, textAlign: 'right', fontSize: 10, color: 'rgba(255,255,255,0.6)' }}>{p.ppg}</div>
+              <div style={{ width: 36, textAlign: 'right', fontSize: 10, color: 'rgba(255,255,255,0.6)' }}>{p.rpg}</div>
+              <div style={{ width: 36, textAlign: 'right', fontSize: 10, color: 'rgba(255,255,255,0.6)' }}>{p.apg}</div>
+              <div style={{ width: 44, textAlign: 'right' }}>
+                <span style={{ fontSize: 10, fontWeight: 700, color: p.rating >= 90 ? '#4ade80' : p.rating >= 83 ? '#E0C58F' : 'rgba(255,255,255,0.45)' }}>{p.rating}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', marginTop: 'auto' }} />
+
+        {/* Last sim result */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 3 }}>Last Simulation</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#4ade80' }}>W 112</span>
+              <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.2)' }}>vs</span>
+              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>98 Lakers</span>
+            </div>
+          </div>
+          <div style={{ padding: '6px 14px', borderRadius: 8, background: 'rgba(224,197,143,0.08)', border: '1px solid rgba(224,197,143,0.2)', fontSize: 9, color: '#E0C58F', letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'default' }}>
+            Run Sim ▶
+          </div>
+        </div>
+
+      </div>
+    </div>
+  )
+}
+
 // ─── Preview registry ─────────────────────────────────────────────────────────
 const PREVIEWS: Record<string, () => JSX.Element> = {
   stocktracker: StockTrackerPreview,
   pomodoro:     PomodoroPreview,
+  basketball:   BasketballPreview,
 }
 
 // ─── GitHub icon ──────────────────────────────────────────────────────────────
