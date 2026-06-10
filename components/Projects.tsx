@@ -31,7 +31,7 @@ const projects = [
     title: 'Can You Go 82-0?',
     description: 'A fantasy NBA draft game — spin for a random team & era, pick one player per round, build a 5-man starting lineup with position rules, then simulate an 82-game season with stat-driven outcome modeling.',
     tags: ['React', 'TypeScript', 'Vite', 'React Router'],
-    github: 'https://github.com/your-basketball-link-here',
+    github: 'https://can-you-go-undefeated.vercel.app/',
     preview: 'basketball',
     featured: false,
   },
@@ -40,18 +40,18 @@ const projects = [
 // ─── Stock Tracker preview ───────────────────────────────────────────────────
 function StockTrackerPreview() {
   const stocks = [
-    { ticker: 'AAPL', name: 'Apple Inc.',    price: '211.42', change: '+1.84',  pct: '+0.88%', up: true,  shares: 12, value: '2,537' },
-    { ticker: 'NVDA', name: 'NVIDIA Corp.',  price: '924.73', change: '+18.20', pct: '+2.01%', up: true,  shares: 4,  value: '3,699' },
-    { ticker: 'TSLA', name: 'Tesla Inc.',    price: '176.08', change: '-3.41',  pct: '-1.90%', up: false, shares: 18, value: '3,169' },
-    { ticker: 'MSFT', name: 'Microsoft',     price: '415.56', change: '+2.10',  pct: '+0.51%', up: true,  shares: 8,  value: '3,324' },
-    { ticker: 'AMZN', name: 'Amazon',        price: '198.32', change: '+3.72',  pct: '+1.91%', up: true,  shares: 15, value: '2,975' },
+    { ticker: 'AAPL', name: 'Apple Inc.', price: '211.42', change: '+1.84', pct: '+0.88%', up: true, shares: 12, value: '2,537' },
+    { ticker: 'NVDA', name: 'NVIDIA Corp.', price: '924.73', change: '+18.20', pct: '+2.01%', up: true, shares: 4, value: '3,699' },
+    { ticker: 'TSLA', name: 'Tesla Inc.', price: '176.08', change: '-3.41', pct: '-1.90%', up: false, shares: 18, value: '3,169' },
+    { ticker: 'MSFT', name: 'Microsoft', price: '415.56', change: '+2.10', pct: '+0.51%', up: true, shares: 8, value: '3,324' },
+    { ticker: 'AMZN', name: 'Amazon', price: '198.32', change: '+3.72', pct: '+1.91%', up: true, shares: 15, value: '2,975' },
   ]
 
   const allocs = [
-    { label: 'Tech',    pct: 58, color: '#5A749A' },
-    { label: 'EV',      pct: 22, color: '#E0C58F' },
-    { label: 'Retail',  pct: 12, color: '#9AB4CC' },
-    { label: 'Other',   pct: 8,  color: '#3C5070' },
+    { label: 'Tech', pct: 58, color: '#5A749A' },
+    { label: 'EV', pct: 22, color: '#E0C58F' },
+    { label: 'Retail', pct: 12, color: '#9AB4CC' },
+    { label: 'Other', pct: 8, color: '#3C5070' },
   ]
 
   return (
@@ -205,11 +205,11 @@ function PomodoroPreview() {
 function BasketballPreview() {
   // Real players from the actual database — real teams, real eras
   const roster = [
-    { name: 'Magic Johnson',  team: 'Lakers',   era: '1980s', pos: 'PG', ovr: 99 },
-    { name: 'Kobe Bryant',    team: 'Lakers',   era: '2000s', pos: 'SG', ovr: 97 },
-    { name: 'LeBron James',   team: 'Cavaliers',era: '2010s', pos: 'SF', ovr: 99 },
-    { name: 'Charles Barkley',team: 'Suns',     era: '1990s', pos: 'PF', ovr: 96 },
-    { name: 'Shaquille O\'Neal',team:'Lakers',  era: '2000s', pos: 'C',  ovr: 99 },
+    { name: 'Magic Johnson', team: 'Lakers', era: '1980s', pos: 'PG', ovr: 99 },
+    { name: 'Kobe Bryant', team: 'Lakers', era: '2000s', pos: 'SG', ovr: 97 },
+    { name: 'LeBron James', team: 'Cavaliers', era: '2010s', pos: 'SF', ovr: 99 },
+    { name: 'Charles Barkley', team: 'Suns', era: '1990s', pos: 'PF', ovr: 96 },
+    { name: 'Shaquille O\'Neal', team: 'Lakers', era: '2000s', pos: 'C', ovr: 99 },
   ]
 
   const posColors: Record<string, string> = {
@@ -222,7 +222,7 @@ function BasketballPreview() {
     { pos: 'SG', x: 20, y: 60 },  // left wing
     { pos: 'SF', x: 80, y: 60 },  // right wing
     { pos: 'PF', x: 28, y: 36 },  // left block
-    { pos: 'C',  x: 72, y: 36 },  // right block / paint
+    { pos: 'C', x: 72, y: 36 },  // right block / paint
   ]
 
   return (
@@ -255,18 +255,18 @@ function BasketballPreview() {
           <div style={{ position: 'relative', flex: 1 }}>
             <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%', display: 'block' }}>
               {/* Court floor */}
-              <rect x="2" y="2" width="96" height="96" rx="4" fill="#1a2235" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5"/>
+              <rect x="2" y="2" width="96" height="96" rx="4" fill="#1a2235" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
               {/* Half-court line */}
-              <line x1="2" y1="50" x2="98" y2="50" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5"/>
+              <line x1="2" y1="50" x2="98" y2="50" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />
               {/* Center circle */}
-              <circle cx="50" cy="50" r="12" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="0.5"/>
+              <circle cx="50" cy="50" r="12" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="0.5" />
               {/* Paint (key) */}
-              <rect x="36" y="2" width="28" height="22" rx="1" fill="rgba(249,115,22,0.04)" stroke="rgba(249,115,22,0.12)" strokeWidth="0.5"/>
+              <rect x="36" y="2" width="28" height="22" rx="1" fill="rgba(249,115,22,0.04)" stroke="rgba(249,115,22,0.12)" strokeWidth="0.5" />
               {/* Rim */}
-              <circle cx="50" cy="9" r="3" fill="none" stroke="rgba(249,115,22,0.3)" strokeWidth="0.8"/>
+              <circle cx="50" cy="9" r="3" fill="none" stroke="rgba(249,115,22,0.3)" strokeWidth="0.8" />
               {/* Three-point arc */}
-              <path d="M 18,2 Q 2,30 18,50" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5"/>
-              <path d="M 82,2 Q 98,30 82,50" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5"/>
+              <path d="M 18,2 Q 2,30 18,50" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+              <path d="M 82,2 Q 98,30 82,50" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
 
               {/* Player slots */}
               {courtSlots.map((slot, i) => {
@@ -275,9 +275,9 @@ function BasketballPreview() {
                 return (
                   <g key={slot.pos}>
                     {/* Glow */}
-                    <circle cx={slot.x} cy={slot.y} r="7.5" fill={color} opacity="0.08"/>
+                    <circle cx={slot.x} cy={slot.y} r="7.5" fill={color} opacity="0.08" />
                     {/* Avatar circle */}
-                    <circle cx={slot.x} cy={slot.y} r="6" fill="#1e2a3a" stroke={color} strokeWidth="1.2"/>
+                    <circle cx={slot.x} cy={slot.y} r="6" fill="#1e2a3a" stroke={color} strokeWidth="1.2" />
                     {/* Position label */}
                     <text x={slot.x} y={slot.y + 1} textAnchor="middle" dominantBaseline="middle" fontSize="4.5" fontWeight="700" fill={color} fontFamily="Inter, sans-serif">{slot.pos}</text>
                     {/* Player name below */}
@@ -334,8 +334,8 @@ function BasketballPreview() {
 // ─── Preview registry ─────────────────────────────────────────────────────────
 const PREVIEWS: Record<string, () => JSX.Element> = {
   stocktracker: StockTrackerPreview,
-  pomodoro:     PomodoroPreview,
-  basketball:   BasketballPreview,
+  pomodoro: PomodoroPreview,
+  basketball: BasketballPreview,
 }
 
 // ─── GitHub icon ──────────────────────────────────────────────────────────────
@@ -402,8 +402,8 @@ export default function Projects() {
     return () => obs.disconnect()
   }, [])
 
-  const featured   = projects[0]
-  const secondary  = projects[1]
+  const featured = projects[0]
+  const secondary = projects[1]
   const subProjects = projects.slice(2)
 
   return (
